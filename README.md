@@ -11,8 +11,7 @@ Yocto meta layer for GRINN Genioboard platform.
 ~$ repo sync
 ~$ export TEMPLATECONF=$PROJ_ROOT/src/meta-grinn-genioboard/conf/
 ~$ source src/poky/oe-init-build-env
-~$ export BUILD_DIR=`pwd`
-~$ DISTRO=rity-demo MACHINE=genioboard bitbake rity-demo-image
+~$ bitbake rity-demo-image
 ```
 
 If all succeeded, your image is located in:
