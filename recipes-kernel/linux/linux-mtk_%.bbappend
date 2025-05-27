@@ -19,8 +19,8 @@ SRC_URI:append:grinn-genio-700-evb = " \
     file://grinn-genio-700-evb.dts     \
 "
 
-SRC_URI:append:grinn-genioboard = " \
-    file://grinn-genioboard.dts     \
+SRC_URI:append:grinn-genio-700-sbc = " \
+    file://grinn-genio-700-sbc.dts     \
 "
 
 do_compile:prepend() {
