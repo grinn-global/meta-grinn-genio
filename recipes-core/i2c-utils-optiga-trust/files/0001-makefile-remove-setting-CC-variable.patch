@@ -1,0 +1,26 @@
+From 06d9ea824e18ef66cf5571da3ff4a4b8a8e1f4f2 Mon Sep 17 00:00:00 2001
+From: Grzegorz Runc <g.runc@grinn-global.com>
+Date: Mon, 26 May 2025 11:24:12 +0200
+Subject: [PATCH] makefile: remove setting `CC` variable
+
+To make build compatible with Yocto `CC` variable
+should not be overwritten.
+---
+ Makefile | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 62e49c2..19778ce 100644
+--- a/Makefile
++++ b/Makefile
+@@ -30,7 +30,6 @@ APPDIR = sample
+ INCDIR = include
+ BINDIR = bin
+ 
+-CC = gcc
+ CFLAGS = -Wall   
+ #LDFLAGS = -lwiringPi
+ DEBUG = 
+-- 
+2.39.5
+
