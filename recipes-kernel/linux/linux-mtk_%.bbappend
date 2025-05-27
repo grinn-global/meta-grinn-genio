@@ -1,6 +1,6 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
-DT_NAME = "grinn-genio-700-evb"
+DT_NAME = "${MACHINE}"
 DT_DIR = "${S}/arch/arm64/boot/dts/mediatek"
 
 SRC_URI += " \
@@ -11,11 +11,20 @@ SRC_URI += " \
     file://0005-tools-resolve_btfids-upport-cross-building-the-kernel-with.patch  \
     file://0006-tools-resolve_btfids-build-with-host-flags.patch                  \
     file://0007-tools-resolve_btfids-use-pkg-config-to-locate-libelf.patch        \
-	file://fragment.cfg \
-	file://${DT_NAME}.dts \
+    file://fragment.cfg                                                           \
+    file://grinn-genio-700-som.dtsi                                               \
+"
+
+SRC_URI:append:grinn-genio-700-evb = " \
+    file://grinn-genio-700-evb.dts     \
+"
+
+SRC_URI:append:grinn-genioboard = " \
+    file://grinn-genioboard.dts     \
 "
 
 do_compile:prepend() {
-	cp ${WORKDIR}/${DT_NAME}.dts ${DT_DIR}/
+    cp ${WORKDIR}/grinn-genio-700-som.dtsi ${DT_DIR}/
+    cp ${WORKDIR}/${DT_NAME}.dts ${DT_DIR}/
 }
 
