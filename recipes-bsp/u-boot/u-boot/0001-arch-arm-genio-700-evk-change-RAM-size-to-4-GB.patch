@@ -1,0 +1,30 @@
+From 33e11f299d0acf2543b3f65ce47688a303d910bd Mon Sep 17 00:00:00 2001
+From: Grzegorz Runc <g.runc@grinn-global.com>
+Date: Thu, 22 May 2025 10:14:26 +0200
+Subject: [PATCH] arch: arm: genio-700-evk: change RAM size to 4 GB
+
+Change RAM size to 4 GB, to be compatible with
+GenioBoard SOM.
+---
+ arch/arm/dts/genio-700-evk.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm/dts/genio-700-evk.dts b/arch/arm/dts/genio-700-evk.dts
+index db95bc9c08..198198b63b 100644
+--- a/arch/arm/dts/genio-700-evk.dts
++++ b/arch/arm/dts/genio-700-evk.dts
+@@ -34,9 +34,9 @@
+ 	};
+ 
+ 	memory@40000000 {
+-		/* 8GB */
++		/* 4GB */
+ 		device_type = "memory";
+-		reg = <0 0x40000000 2 0x00000000>;
++		reg = <0 0x40000000 1 0x00000000>;
+ 	};
+ 
+ 	firmware: firmware {
+-- 
+2.39.5
+
