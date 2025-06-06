@@ -1,0 +1,30 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Copyright (c) 2025 Grinn sp. z o.o.
+ *
+ */
+
+/dts-v1/;
+/plugin/;
+
+#include "camera-common.dtsi"
+
+/ {
+	fragment@9 {
+		target = <&i2c3>;
+		__overlay__ {
+			sensor1 {
+				sensor-names = "imx214_mipi_raw";
+				reg = <0x1a>;
+				status = "okay";
+			};
+		};
+	};
+
+	fragment@10 {
+		target = <&mtkcam1>;
+		__overlay__ {
+			status = "okay";
+		};
+	};
+};
