@@ -20,11 +20,13 @@ SRC_URI:append:grinn-genio-700-evb = " \
 "
 
 SRC_URI:append:grinn-genio-700-sbc = " \
+    file://grinn-genio-sbc.dtsi        \
     file://grinn-genio-700-sbc.dts     \
 "
 
 do_compile:prepend() {
     cp ${WORKDIR}/grinn-genio-700-som.dtsi ${DT_DIR}/
+    cp ${WORKDIR}/grinn-genio-sbc.dtsi ${DT_DIR}/
     cp ${WORKDIR}/${DT_NAME}.dts ${DT_DIR}/
 }
 
