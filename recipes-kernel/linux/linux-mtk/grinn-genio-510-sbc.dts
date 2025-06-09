@@ -1,0 +1,12 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+/*
+ * Copyright (C) 2025 Grinn sp. z o.o..
+ * Author: Grzegorz Runc <grzegorz.runc@grinn-global.com>
+ */
+/dts-v1/;
+#include "grinn-genio-510-som.dtsi"
+#include "grinn-genio-sbc.dtsi"
+
+/ {
+	model = "Grinn GenioSBC-510";
+};

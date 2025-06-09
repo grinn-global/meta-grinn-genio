@@ -13,6 +13,7 @@ SRC_URI += " \
     file://0007-tools-resolve_btfids-use-pkg-config-to-locate-libelf.patch        \
     file://fragment.cfg                                                           \
     file://grinn-genio-700-som.dtsi                                               \
+    file://grinn-genio-510-som.dtsi                                               \
 "
 
 SRC_URI:append:grinn-genio-700-evb = " \
@@ -27,8 +28,13 @@ SRC_URI:append:grinn-genio-700-sbc = " \
     file://grinn-genio-700-sbc.dts     \
 "
 
+SRC_URI:append:grinn-genio-510-sbc = " \
+    file://grinn-genio-510-sbc.dts     \
+"
+
 do_compile:prepend() {
     cp ${WORKDIR}/grinn-genio-700-som.dtsi ${DT_DIR}/
+    cp ${WORKDIR}/grinn-genio-510-som.dtsi ${DT_DIR}/
     cp ${WORKDIR}/grinn-genio-sbc.dtsi ${DT_DIR}/
     cp ${WORKDIR}/${DT_NAME}.dts ${DT_DIR}/
 }
