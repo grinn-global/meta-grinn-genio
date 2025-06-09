@@ -1,1 +1,1 @@
-FILESEXTRAPATHS:prepend:grinn-genio-700-sbc := "${THISDIR}/grinn-genio-700-sbc:"
+FILESEXTRAPATHS:prepend:grinn-genio-sbc := "${THISDIR}/grinn-genio-sbc:"

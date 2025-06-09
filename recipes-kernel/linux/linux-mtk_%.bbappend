@@ -19,8 +19,11 @@ SRC_URI:append:grinn-genio-700-evb = " \
     file://grinn-genio-700-evb.dts     \
 "
 
+SRC_URI:append:grinn-genio-sbc = " \
+    file://grinn-genio-sbc.dtsi    \
+"
+
 SRC_URI:append:grinn-genio-700-sbc = " \
-    file://grinn-genio-sbc.dtsi        \
     file://grinn-genio-700-sbc.dts     \
 "
 

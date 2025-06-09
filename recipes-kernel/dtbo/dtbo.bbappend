@@ -2,9 +2,9 @@
 # Released under the MIT license (see COPYING.MIT for the terms)
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/common:"
-FILESEXTRAPATHS:prepend:grinn-genio-700-sbc := "${THISDIR}/grinn-genio-700-sbc:"
+FILESEXTRAPATHS:prepend:grinn-genio-sbc := "${THISDIR}/grinn-genio-sbc:"
 
-SRC_URI:append:grinn-genio-700-sbc = "            \
+SRC_URI:append:grinn-genio-sbc = "                \
 	file://mtk-camera.dtsi                    \
 	file://isp71.dtsi                         \
 	file://camera-common.dtsi                 \
