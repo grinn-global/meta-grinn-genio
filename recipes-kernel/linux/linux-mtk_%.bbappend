@@ -32,10 +32,13 @@ SRC_URI:append:grinn-genio-510-sbc = " \
     file://grinn-genio-510-sbc.dts     \
 "
 
+do_compile:prepend:grinn-genio-sbc() {
+     cp ${WORKDIR}/grinn-genio-sbc.dtsi ${DT_DIR}/
+}
+
 do_compile:prepend() {
     cp ${WORKDIR}/grinn-genio-700-som.dtsi ${DT_DIR}/
     cp ${WORKDIR}/grinn-genio-510-som.dtsi ${DT_DIR}/
-    cp ${WORKDIR}/grinn-genio-sbc.dtsi ${DT_DIR}/
     cp ${WORKDIR}/${DT_NAME}.dts ${DT_DIR}/
 }
 
