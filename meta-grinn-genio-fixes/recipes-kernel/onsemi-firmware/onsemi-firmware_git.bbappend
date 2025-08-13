@@ -1,0 +1,1 @@
+addtask do_license_rename after do_unpack before do_populate_lic
