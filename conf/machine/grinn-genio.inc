@@ -19,3 +19,14 @@ EXTRA_IMAGEDEPENDS += "virtual/dtb"
 IMAGE_CMD:aiotflash:append () {
     cp -a ${DEPLOY_DIR_IMAGE}/devicetree ${tmp_pack_dir}/
 }
+
+#
+# Replace symlink with copy (to solve permissions problem with symlinks on Windows)
+# NOTE: rity.json is enough for genio-flash and partitions.json is
+#       kept only for compatibility
+#
+
+IMAGE_CMD:aiotflash:append () {
+    rm -v -f ${tmp_pack_dir}/partitions.json
+    cp -v -L ${tmp_pack_dir}/rity.json ${tmp_pack_dir}/partitions.json
+}
