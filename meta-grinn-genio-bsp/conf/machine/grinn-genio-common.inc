@@ -7,7 +7,6 @@ IMAGE_FSTYPES = "wic.img aiotflash.tar.xz aiotflash.tar.xz.sha256sum"
 
 XZ_COMPRESSION_LEVEL ?= "-3"
 
-
 #
 # Add devicetree directory to aiotflash.tar
 #
