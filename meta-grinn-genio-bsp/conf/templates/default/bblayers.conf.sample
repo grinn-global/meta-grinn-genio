@@ -31,6 +31,7 @@ BBLAYERS ?= " \
   ##OEROOT##/../meta-tensorflow \
   ##OEROOT##/../meta-lts-mixins \
   ##OEROOT##/../meta-browser/meta-chromium \
-  ##OEROOT##/../meta-grinn-genio \
+  ##OEROOT##/../meta-grinn-genio/meta-grinn-genio-bsp \
+  ##OEROOT##/../meta-grinn-genio/meta-grinn-genio-fixes \
   "
 
