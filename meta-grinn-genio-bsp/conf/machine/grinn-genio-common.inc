@@ -29,3 +29,13 @@ IMAGE_CMD:aiotflash:append () {
     rm -v -f ${tmp_pack_dir}/partitions.json
     cp -v -L ${tmp_pack_dir}/rity.json ${tmp_pack_dir}/partitions.json
 }
+
+#
+# add fw_env.config to aiotflash archive
+# genio-glash is using this file to detect env size. If not found it
+# assumes 4096B
+#
+
+IMAGE_CMD:aiotflash:append () {
+    cp -v -L ${DEPLOY_DIR_IMAGE}/fw_env.config ${tmp_pack_dir}/
+}
