@@ -1,0 +1,123 @@
+header:
+  version: 19
+
+distro: rity-demo
+target: rity-demo-image
+machine: unset
+
+local_conf_header:
+  meta-grinn-genio: |
+    PACKAGE_CLASSES ?= "package_ipk"
+    EXTRA_IMAGE_FEATURES ?= "debug-tweaks"
+    USER_CLASSES ?= "buildstats"
+    PATCHRESOLVE = "noop"
+
+    BB_DISKMON_DIRS ??= "\
+        STOPTASKS,${TMPDIR},1G,100K \
+        STOPTASKS,${DL_DIR},1G,100K \
+        STOPTASKS,${SSTATE_DIR},1G,100K \
+        STOPTASKS,/tmp,100M,100K \
+        HALT,${TMPDIR},100M,1K \
+        HALT,${DL_DIR},100M,1K \
+        HALT,${SSTATE_DIR},100M,1K \
+        HALT,/tmp,10M,1K"
+
+    PACKAGECONFIG:append:pn-qemu-system-native = " sdl"
+    SKIP_META_SECURITY_SANITY_CHECK = "1"
+    CONF_VERSION = "2"
+    LICENSE_FLAGS_ACCEPTED = "commercial commercial_libav commercial_x264"
+    IMAGE_ROOTFS_EXTRA_SPACE = "200000"
+    KERNEL_DEVICETREE_OVERLAYS_AUTOLOAD:genio-510 += "gpu-mali.dtbo video.dtbo apusys.dtbo"
+    KERNEL_DEVICETREE_OVERLAYS_AUTOLOAD:genio-700 += "gpu-mali.dtbo video.dtbo apusys.dtbo"
+
+bblayers_conf_header:
+  meta-grinn-genio: |
+    POKY_BBLAYERS_CONF_VERSION = "2"
+    BBPATH = "${TOPDIR}"
+    BBFILES ?= ""
+
+repos:
+  poky:
+    url: https://git.yoctoproject.org/poky
+    commit: 1ab34a5f6407b597f569c4b08d341e82db488f2c
+    layers:
+      meta:
+      meta-poky:
+      meta-yocto-bsp:
+
+  meta-rity:
+    url: https://gitlab.com/mediatek/aiot/rity/meta-rity
+    commit: db66fb1d4fd9d256ffb692db1e47e4ffcf52440b
+    layers:
+      meta:
+      meta-rity-bringup:
+      meta-rity-bsp:
+      meta-rity-demo:
+
+  meta-mediatek-bsp:
+    url: https://gitlab.com/mediatek/aiot/rity/meta-mediatek-bsp
+    commit: 75131c31caa931fc0d77ac0b992452545bf34967
+
+  meta-mediatek-tsn:
+    url: https://gitlab.com/mediatek/aiot/rity/meta-mediatek-tsn
+    commit: b91a6a227886ea88c97a31c805b19484874dfae7
+
+  meta-mediatek-demo:
+    url: https://gitlab.com/mediatek/aiot/rity/meta-mediatek-demo
+    commit: 399ef9563e2ba6d887771138c01ab5aaad164b18
+
+  meta-mediatek-bluedroid:
+    url: https://gitlab.com/mediatek/aiot/rity/meta-mediatek-bluedroid
+    commit: 026e552c94bf053f1d06df5880edf5da263442f5
+
+  meta-nn:
+    url: https://gitlab.com/mediatek/aiot/rity/meta-nn
+    commit: d7c8951d5bdeaac1fcf7c6402ffdd99c2c39fa84
+
+  meta-stress-test:
+    url: https://gitlab.com/mediatek/aiot/rity/meta-stress-test
+    commit: 9cf5525045ed4541bb5089e143032de9fee92305
+
+  meta-arm:
+    url: https://git.yoctoproject.org/meta-arm
+    commit: 936c02ec13661bd86a05f7f90e1b920d5092d670
+    layers:
+      meta-arm:
+      meta-arm-toolchain:
+
+  meta-openembedded:
+    url: https://git.openembedded.org/meta-openembedded
+    commit: 4ad41baed6236d499804cbfc4f174042d84fce97
+    layers:
+      meta-oe:
+      meta-networking:
+      meta-multimedia:
+      meta-python:
+      meta-perl:
+
+  meta-tensorflow:
+    url: https://git.yoctoproject.org/meta-tensorflow
+    commit: f5f218c1ac055ef449ce779392ef426936d1bd2b
+
+  meta-security:
+    url: https://git.yoctoproject.org/meta-security
+    commit: 353078bc06c8b471736daab6ed193e30d533d1f1
+
+  meta-clang:
+    url: https://gitlab.collabora.com/mediatek/aiot/rity/meta-clang
+    commit: c882fc2c82c9fb42c1533dfc27b17029e75f05ab
+
+  meta-lts-mixins:
+    url: https://git.yoctoproject.org/meta-lts-mixins
+    commit: 199dd7704cfb32db445e09f745932afbe51e1763
+
+  meta-browser:
+    url: https://gitlab.collabora.com/mediatek/aiot/rity/meta-browser
+    commit: f3a16f9482bd8d2876e6a4bc5b0d06af4bb2287a
+    layers:
+      meta-chromium:
+
+  meta-grinn-genio:
+    layers:
+      meta-grinn-genio-bsp:
+      meta-grinn-genio-fixes:
