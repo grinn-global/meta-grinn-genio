@@ -1,6 +1,12 @@
 IMAGE_FSTYPES = "wic.img aiotflash.tar.xz aiotflash.tar.xz.sha256sum"
 
 #
+# Disable optee by default.
+#
+
+MACHINE_FEATURES:remove = "optee optee-efuse"
+
+#
 # Override the default value to let the user set this value appropriately.
 #
 
