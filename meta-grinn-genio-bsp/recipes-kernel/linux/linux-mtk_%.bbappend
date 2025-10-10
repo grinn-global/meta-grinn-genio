@@ -10,21 +10,20 @@ SRC_URI += " \
 "
 
 SRC_URI:append:grinn-genio-700-evb = " \
-    file://grinn-genio.cfg             \
+    file://eth.cfg                     \
     file://grinn-genio-700-evb.dts     \
 "
 
 SRC_URI:append:grinn-genio-sbc = " \
+    file://eth.cfg                 \
     file://grinn-genio-sbc.dtsi    \
 "
 
 SRC_URI:append:grinn-genio-700-sbc = " \
-    file://grinn-genio.cfg             \
     file://grinn-genio-700-sbc.dts     \
 "
 
 SRC_URI:append:grinn-genio-510-sbc = " \
-    file://grinn-genio.cfg             \
     file://grinn-genio-510-sbc.dts     \
 "
 
