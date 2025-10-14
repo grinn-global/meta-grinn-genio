@@ -1,4 +1,4 @@
-From 16a285d307787bb9c3e2c5a27e228da5e035b3fe Mon Sep 17 00:00:00 2001
+From 0fe61f9c4867211fbb2ce5b68277c5c408fe6aff Mon Sep 17 00:00:00 2001
 From: Bartosz Bilas <b.bilas@grinn-global.com>
 Date: Thu, 2 Oct 2025 12:29:34 +0200
 Subject: [PATCH] arch: mediatek: adjust memory size at runtime
@@ -7,7 +7,8 @@ Use TFA + libdram to obtain and set the actual memory size.
 ---
  arch/arm/include/asm/arch-mediatek/misc.h |  9 +++++++++
  arch/arm/mach-mediatek/mt8188/init.c      | 17 ++++++++++++-----
- 2 files changed, 21 insertions(+), 5 deletions(-)
+ arch/arm/mach-mediatek/mt8370/init.c      | 17 ++++++++++++-----
+ 3 files changed, 33 insertions(+), 10 deletions(-)
 
 diff --git a/arch/arm/include/asm/arch-mediatek/misc.h b/arch/arm/include/asm/arch-mediatek/misc.h
 index dd64c1f6..df1b9572 100644
@@ -58,6 +59,42 @@ index 7d357f10..cf6dc1f6 100644
  	/*
  	 * Limit gd->ram_top not exceeding SZ_4G.
 @@ -82,7 +90,6 @@ static struct mm_region mt8188_mem_map[] = {
+ 		/* DDR */
+ 		.virt = 0x40000000UL,
+ 		.phys = 0x40000000UL,
+-		.size = 0x200000000UL,
+ 		.attrs = PTE_BLOCK_MEMTYPE(MT_NORMAL) | PTE_BLOCK_OUTER_SHARE,
+ 	}, {
+ 		.virt = 0x00000000UL,
+diff --git a/arch/arm/mach-mediatek/mt8370/init.c b/arch/arm/mach-mediatek/mt8370/init.c
+index 8f720c25..307a3cca 100644
+--- a/arch/arm/mach-mediatek/mt8370/init.c
++++ b/arch/arm/mach-mediatek/mt8370/init.c
+@@ -21,11 +21,19 @@ int dram_init(void)
+ {
+ 	int ret;
+ 
+-	ret = fdtdec_setup_memory_banksize();
+-	if (ret)
+-		return ret;
++	if (BOOT_ARGUMENT->magic_number == BOOT_ARGUMENT_MAGIC) {
++		gd->ram_size = BOOT_ARGUMENT->dram_size;
++		gd->ram_base = 0x40000000UL;
++		debug("Boot argument DRAM size: %lluGB\n", gd->ram_size >> 30);
++	} else {
++		ret = fdtdec_setup_memory_banksize();
++		if (ret)
++			return ret;
+ 
+-	fdtdec_setup_mem_size_base();
++		fdtdec_setup_mem_size_base();
++	}
++
++	mem_map[0].size = gd->ram_size;
+ 
+ 	/*
+ 	 * Limit gd->ram_top not exceeding SZ_4G.
+@@ -77,7 +85,6 @@ static struct mm_region mt8370_mem_map[] = {
  		/* DDR */
  		.virt = 0x40000000UL,
  		.phys = 0x40000000UL,
