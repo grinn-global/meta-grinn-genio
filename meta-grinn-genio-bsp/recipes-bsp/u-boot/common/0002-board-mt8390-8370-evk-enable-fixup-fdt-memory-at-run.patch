@@ -52,33 +52,5 @@ index c671794d..4891581f 100644
  void mediatek_capsule_update_board_setup(void)
  {
  	fw_images[0].image_index = MT8370_FIT_IMAGE;
-diff --git a/configs/genio_510_evk_defconfig b/configs/genio_510_evk_defconfig
-index ad0e496d..38699a92 100644
---- a/configs/genio_510_evk_defconfig
-+++ b/configs/genio_510_evk_defconfig
-@@ -20,7 +20,8 @@ CONFIG_DISTRO_DEFAULTS=y
- CONFIG_FIT=y
- CONFIG_FIT_SIGNATURE=y
- CONFIG_LEGACY_IMAGE_FORMAT=y
--# CONFIG_ARCH_FIXUP_FDT_MEMORY is not set
-+CONFIG_OF_CONTROL=y
-+CONFIG_OF_BOARD_SETUP=y
- CONFIG_DEFAULT_FDT_FILE="genio-510-evk"
- # CONFIG_DISPLAY_BOARDINFO is not set
- # CONFIG_CMD_CONSOLE is not set
-diff --git a/configs/genio_700_evk_defconfig b/configs/genio_700_evk_defconfig
-index e0e06e9a..0ceb11f2 100644
---- a/configs/genio_700_evk_defconfig
-+++ b/configs/genio_700_evk_defconfig
-@@ -20,7 +20,8 @@ CONFIG_DISTRO_DEFAULTS=y
- CONFIG_FIT=y
- CONFIG_FIT_SIGNATURE=y
- CONFIG_LEGACY_IMAGE_FORMAT=y
--# CONFIG_ARCH_FIXUP_FDT_MEMORY is not set
-+CONFIG_OF_CONTROL=y
-+CONFIG_OF_BOARD_SETUP=y
- CONFIG_DEFAULT_FDT_FILE="genio-700-evk"
- # CONFIG_DISPLAY_BOARDINFO is not set
- CONFIG_BOARD_LATE_INIT=y
 -- 
 2.39.5
