@@ -1,0 +1,6 @@
+header:
+  version: 19
+
+local_conf_header:
+  nda: |
+    NDA_BUILD = "1"
