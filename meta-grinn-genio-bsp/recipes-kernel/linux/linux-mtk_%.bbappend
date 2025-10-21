@@ -6,7 +6,6 @@ DT_DIR = "${S}/arch/arm64/boot/dts/mediatek"
 SRC_URI += " \
     file://0001-mtk_dp-add-support-for-direct-display-port-interface.patch        \
     file://grinn-genio-700-som.dtsi                                               \
-    file://grinn-genio-510-som.dtsi                                               \
     file://grinn-genio-som.dtsi                                                   \
 "
 
@@ -34,7 +33,6 @@ do_compile:prepend:grinn-genio-sbc() {
 
 do_compile:prepend() {
     cp ${WORKDIR}/grinn-genio-700-som.dtsi ${DT_DIR}/
-    cp ${WORKDIR}/grinn-genio-510-som.dtsi ${DT_DIR}/
     cp ${WORKDIR}/grinn-genio-som.dtsi ${DT_DIR}/
     cp ${WORKDIR}/${DT_NAME}.dts ${DT_DIR}/
 }
