@@ -4,20 +4,23 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/${MACHINE}:"
 DTS_DIR = "${S}/arch/arm/dts"
 DEFCONFIG_DIR = "${S}/configs"
 
-SRC_FILES += " \
+SRC_COMMON += " \
     file://0001-arch-mediatek-adjust-memory-size-at-runtime.patch \
     file://0002-board-mt8390-8370-evk-enable-fixup-fdt-memory-at-run.patch \
     file://${MACHINE}.dts \
     file://${MACHINE}_defconfig \
+"
+
+SRC_URI += " \
     file://grinn-genio-som.dtsi \
 "
 
 SRC_URI:append:grinn-genio-700-evb = " \
-    ${SRC_FILES} \
+    ${SRC_COMMON} \
 "
 
 SRC_URI:append:grinn-genio-sbc = " \
-    ${SRC_FILES} \
+    ${SRC_COMMON} \
     file://grinn-genio-sbc.dtsi \
 "
 
