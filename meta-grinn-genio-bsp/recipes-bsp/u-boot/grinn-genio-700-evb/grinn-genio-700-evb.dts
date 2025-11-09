@@ -82,6 +82,8 @@
 	pinctrl-0 = <&eth_default_pins>;
 	pinctrl-1 = <&eth_sleep_pins>;
 	mediatek,mac-wol;
+	mediatek,tx-delay-ps = <1740>;
+	mediatek,rx-delay-ps = <0>;
 	snps,reset-gpio = <&pio 147 GPIO_ACTIVE_LOW>;
 	status = "okay";
 
@@ -90,8 +92,19 @@
 		#address-cells = <1>;
 		#size-cells = <0>;
 		ethernet_phy0: ethernet-phy@3 {
-			txc-skew-ps = <1980>;
 			reg = <3>;
+			rxc-skew-ps = <1500>;
+			rxdv-skew-ps = <420>;
+			rxd0-skew-ps = <420>;
+			rxd1-skew-ps = <420>;
+			rxd2-skew-ps = <420>;
+			rxd3-skew-ps = <420>;
+			txc-skew-ps = <900>;
+			txen-skew-ps = <420>;
+			txd0-skew-ps = <420>;
+			txd1-skew-ps = <420>;
+			txd2-skew-ps = <420>;
+			txd3-skew-ps = <420>;
 			compatible = "ethernet-phy-ieee802.3-c22";
 			eee-broken-1000t;
 			interrupts-extended = <&pio 148 IRQ_TYPE_LEVEL_LOW>;
