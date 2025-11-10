@@ -34,15 +34,15 @@ do_configure:prepend() {
 
 do_configure:prepend:grinn-genio-700-evb() {
     cp ${WORKDIR}/${MACHINE}.dts ${DTS_DIR}/genio-700-evk.dts
-    cp ${WORKDIR}/${MACHINE}_defconfig ${DEFCONFIG_DIR}/grinn_genio_700_evk_defconfig
+    cp ${WORKDIR}/${MACHINE}_defconfig ${DEFCONFIG_DIR}/genio_700_evk_defconfig
 }
 
 do_configure:prepend:grinn-genio-700-sbc() {
     cp ${WORKDIR}/${MACHINE}.dts ${DTS_DIR}/genio-700-evk.dts
-    cp ${WORKDIR}/${MACHINE}_defconfig ${DEFCONFIG_DIR}/grinn_genio_700_sbc_defconfig
+    cp ${WORKDIR}/${MACHINE}_defconfig ${DEFCONFIG_DIR}/genio_700_evk_defconfig
 }
 
 do_configure:prepend:grinn-genio-510-sbc() {
     cp ${WORKDIR}/${MACHINE}.dts ${DTS_DIR}/genio-510-evk.dts
-    cp ${WORKDIR}/${MACHINE}_defconfig ${DEFCONFIG_DIR}/grinn_genio_510_sbc_defconfig
+    cp ${WORKDIR}/${MACHINE}_defconfig ${DEFCONFIG_DIR}/genio_510_evk_defconfig
 }
