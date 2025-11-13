@@ -1,12 +1,6 @@
 IMAGE_FSTYPES = "wic.img aiotflash.tar.xz aiotflash.tar.xz.sha256sum"
 
 #
-# Override the default value to let the user set this value appropriately.
-#
-
-OPTEE_DRAM_SIZE = "0x00000000"
-
-#
 # Use fast compression by default to reduce image assembly time.
 # For releases where size is important it can be changed to Yocto default "-9"
 #
