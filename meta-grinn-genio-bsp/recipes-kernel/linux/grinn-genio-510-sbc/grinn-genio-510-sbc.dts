@@ -5,8 +5,8 @@
  */
 /dts-v1/;
 #include "mt8370.dtsi"
-#include "grinn-genio-som.dtsi"
-#include "grinn-genio-sbc.dtsi"
+#include "grinn-genio-510-700-som.dtsi"
+#include "grinn-genio-510-700-sbc.dtsi"
 
 / {
 	model = "Grinn GenioSBC-510";
