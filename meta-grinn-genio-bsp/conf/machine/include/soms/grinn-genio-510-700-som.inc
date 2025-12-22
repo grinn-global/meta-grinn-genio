@@ -1,0 +1,4 @@
+MACHINEOVERRIDES =. "grinn-genio-510-700-som:"
+
+OPTEE_DRAM_SIZE = "0x200000000"
+LIBDRAM_BOARD_NAME = "genio-700-evk"
