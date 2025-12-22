@@ -9,13 +9,14 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=ad5eaf5293969bc516d1059db0e35101"
 
 SRCBRANCH ?= "master"
 SRCREV = "e9beb4eeb40c298180fdefc37fff896b2f64a53a"
-SRC_URI = "git://github.com/Infineon/i2c-utils-optiga-trust.git;protocol=https;branch=${SRCBRANCH} \
-	   file://0001-makefile-remove-setting-CC-variable.patch"
+SRC_URI = "git://github.com/Infineon/i2c-utils-optiga-trust.git;protocol=https;branch=${SRCBRANCH}"
 
 S = "${WORKDIR}/git"
 
+EXTRA_OEMAKE = "CC='${CC}'"
+
 do_compile() {
-	make
+	oe_runmake
 }
 
 do_install() {
@@ -25,3 +26,4 @@ do_install() {
 	install -m 755 ${S}/sample/trustx_softreset ${D}${bindir}
 	install -m 755 ${S}/sample/trustx_w_addr ${D}${bindir}
 }
+
