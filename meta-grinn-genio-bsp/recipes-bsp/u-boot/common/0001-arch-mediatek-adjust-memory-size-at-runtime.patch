@@ -1,37 +1,16 @@
-From 0fe61f9c4867211fbb2ce5b68277c5c408fe6aff Mon Sep 17 00:00:00 2001
+From a1e11e91039ad3fca5b20e1768e6a865b1e3487f Mon Sep 17 00:00:00 2001
 From: Bartosz Bilas <b.bilas@grinn-global.com>
 Date: Thu, 2 Oct 2025 12:29:34 +0200
 Subject: [PATCH] arch: mediatek: adjust memory size at runtime
 
 Use TFA + libdram to obtain and set the actual memory size.
 ---
- arch/arm/include/asm/arch-mediatek/misc.h |  9 +++++++++
- arch/arm/mach-mediatek/mt8188/init.c      | 17 ++++++++++++-----
- arch/arm/mach-mediatek/mt8370/init.c      | 17 ++++++++++++-----
- 3 files changed, 33 insertions(+), 10 deletions(-)
+ arch/arm/mach-mediatek/mt8188/init.c | 17 ++++++++++++-----
+ arch/arm/mach-mediatek/mt8370/init.c | 17 ++++++++++++-----
+ 2 files changed, 24 insertions(+), 10 deletions(-)
 
-diff --git a/arch/arm/include/asm/arch-mediatek/misc.h b/arch/arm/include/asm/arch-mediatek/misc.h
-index dd64c1f6..df1b9572 100644
---- a/arch/arm/include/asm/arch-mediatek/misc.h
-+++ b/arch/arm/include/asm/arch-mediatek/misc.h
-@@ -14,6 +14,15 @@
- #define APHW_VER		0x08
- #define APSW_VER		0x0c
- 
-+#define BOOT_ARGUMENT_LOCATION	(0x40000100)
-+#define BOOT_ARGUMENT_MAGIC	0x504c504c
-+#define BOOT_ARGUMENT		((struct boot_argument *)BOOT_ARGUMENT_LOCATION)
-+
-+struct boot_argument {
-+	unsigned int magic_number;
-+	unsigned long long dram_size;
-+};
-+
- void mediatek_capsule_update_board_setup(void);
- 
- #endif /* __MEDIATEK_MISC_H_ */
 diff --git a/arch/arm/mach-mediatek/mt8188/init.c b/arch/arm/mach-mediatek/mt8188/init.c
-index 7d357f10..cf6dc1f6 100644
+index 7d357f100a..cf6dc1f6de 100644
 --- a/arch/arm/mach-mediatek/mt8188/init.c
 +++ b/arch/arm/mach-mediatek/mt8188/init.c
 @@ -21,11 +21,19 @@ int dram_init(void)
@@ -67,7 +46,7 @@ index 7d357f10..cf6dc1f6 100644
  	}, {
  		.virt = 0x00000000UL,
 diff --git a/arch/arm/mach-mediatek/mt8370/init.c b/arch/arm/mach-mediatek/mt8370/init.c
-index 8f720c25..307a3cca 100644
+index 8f720c25ce..307a3cca30 100644
 --- a/arch/arm/mach-mediatek/mt8370/init.c
 +++ b/arch/arm/mach-mediatek/mt8370/init.c
 @@ -21,11 +21,19 @@ int dram_init(void)
@@ -103,4 +82,5 @@ index 8f720c25..307a3cca 100644
  	}, {
  		.virt = 0x00000000UL,
 -- 
-2.39.5
+2.48.1
+

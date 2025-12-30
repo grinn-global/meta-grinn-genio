@@ -1,4 +1,4 @@
-From 5e12d08f5df5dadc2a058adfba4cc36cb0268833 Mon Sep 17 00:00:00 2001
+From 5759c4d4b573c80c10d37378d9cb286be807d5c4 Mon Sep 17 00:00:00 2001
 From: Bartosz Bilas <b.bilas@grinn-global.com>
 Date: Wed, 8 Oct 2025 10:01:49 +0000
 Subject: [PATCH] board: mt8390/8370-evk: enable fixup fdt memory at runtime
@@ -6,36 +6,14 @@ Subject: [PATCH] board: mt8390/8370-evk: enable fixup fdt memory at runtime
 Overwrite the memory size in the devicetree that is
 passed to the kernel with the actual size detected.
 ---
- board/mediatek/mt8188/mt8390_evk.c | 9 +++++++++
- board/mediatek/mt8370/mt8370_evk.c | 9 +++++++++
- configs/genio_510_evk_defconfig    | 3 ++-
- configs/genio_700_evk_defconfig    | 3 ++-
- 4 files changed, 22 insertions(+), 2 deletions(-)
+ board/mediatek/genio-510-evk/mt8370_evk.c | 9 +++++++++
+ board/mediatek/genio-700-evk/mt8390_evk.c | 9 +++++++++
+ 2 files changed, 18 insertions(+)
 
-diff --git a/board/mediatek/mt8188/mt8390_evk.c b/board/mediatek/mt8188/mt8390_evk.c
-index 88778f29..b38dc39d 100644
---- a/board/mediatek/mt8188/mt8390_evk.c
-+++ b/board/mediatek/mt8188/mt8390_evk.c
-@@ -68,6 +68,15 @@ static bool board_is_genio_700_evk_qspi(void)
- 		of_machine_is_compatible("mediatek,genio-700-evk-qspi");
- }
- 
-+int ft_board_setup(void *blob, struct bd_info *bd)
-+{
-+       /*
-+        * Overwrite the memory size in the devicetree that is
-+        * passed to the kernel with the actual size detected.
-+        */
-+       return fdt_fixup_memory(blob, gd->ram_base, gd->ram_size);
-+}
-+
- void mediatek_capsule_update_board_setup(void)
- {
- 	fw_images[0].image_index = MT8390_FIT_IMAGE;
-diff --git a/board/mediatek/mt8370/mt8370_evk.c b/board/mediatek/mt8370/mt8370_evk.c
-index c671794d..4891581f 100644
---- a/board/mediatek/mt8370/mt8370_evk.c
-+++ b/board/mediatek/mt8370/mt8370_evk.c
+diff --git a/board/mediatek/genio-510-evk/mt8370_evk.c b/board/mediatek/genio-510-evk/mt8370_evk.c
+index c671794dee..4891581f97 100644
+--- a/board/mediatek/genio-510-evk/mt8370_evk.c
++++ b/board/mediatek/genio-510-evk/mt8370_evk.c
 @@ -64,6 +64,15 @@ static bool board_is_genio_510_evk_qspi(void)
  		of_machine_is_compatible("mediatek,genio-510-evk-qspi");
  }
@@ -52,5 +30,26 @@ index c671794d..4891581f 100644
  void mediatek_capsule_update_board_setup(void)
  {
  	fw_images[0].image_index = MT8370_FIT_IMAGE;
+diff --git a/board/mediatek/genio-700-evk/mt8390_evk.c b/board/mediatek/genio-700-evk/mt8390_evk.c
+index 88778f29ad..b38dc39d12 100644
+--- a/board/mediatek/genio-700-evk/mt8390_evk.c
++++ b/board/mediatek/genio-700-evk/mt8390_evk.c
+@@ -68,6 +68,15 @@ static bool board_is_genio_700_evk_qspi(void)
+ 		of_machine_is_compatible("mediatek,genio-700-evk-qspi");
+ }
+ 
++int ft_board_setup(void *blob, struct bd_info *bd)
++{
++       /*
++        * Overwrite the memory size in the devicetree that is
++        * passed to the kernel with the actual size detected.
++        */
++       return fdt_fixup_memory(blob, gd->ram_base, gd->ram_size);
++}
++
+ void mediatek_capsule_update_board_setup(void)
+ {
+ 	fw_images[0].image_index = MT8390_FIT_IMAGE;
 -- 
-2.39.5
+2.48.1
+
