@@ -4,6 +4,8 @@
  * Author: Mateusz Koza <mateusz.koza@grinn-global.com>
  */
 
+#include "mt6359.dtsi"
+
 / {
 	memory@40000000 {
 		/* 4GB */
@@ -47,33 +49,6 @@
 			no-map;
 			reg = <0 0x43200000 0 0x00c00000>;
 		};
-	};
-
-	mt6359_vufs_ldo_reg: regulator-0 {
-		compatible = "regulator-fixed";
-		regulator-name = "vufs";
-		regulator-min-microvolt = <1800000>;
-		regulator-max-microvolt = <1800000>;
-		regulator-boot-on;
-		regulator-always-on;
-	};
-
-	mt6359_vemc_1_ldo_reg: regulator-1 {
-		compatible = "regulator-fixed";
-		regulator-name = "vemc";
-		regulator-min-microvolt = <3300000>;
-		regulator-max-microvolt = <3300000>;
-		regulator-boot-on;
-		regulator-always-on;
-	};
-
-	mt6359_vusb_ldo_reg: regulator-2 {
-		compatible = "regulator-fixed";
-		regulator-name = "vusb";
-		regulator-min-microvolt = <3300000>;
-		regulator-max-microvolt = <3300000>;
-		regulator-boot-on;
-		regulator-always-on;
 	};
 };
 

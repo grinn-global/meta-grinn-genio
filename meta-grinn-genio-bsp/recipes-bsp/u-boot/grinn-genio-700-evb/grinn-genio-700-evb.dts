@@ -9,7 +9,7 @@
 #include <config.h>
 
 #include "mt8188.dtsi"
-#include "grinn-genio-som.dtsi"
+#include "grinn-genio-510-700-som.dtsi"
 
 / {
 	model = "Grinn GenioEVB-700";
