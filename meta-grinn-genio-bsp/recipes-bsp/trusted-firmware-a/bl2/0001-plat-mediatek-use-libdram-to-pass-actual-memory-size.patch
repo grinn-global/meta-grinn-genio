@@ -1,4 +1,4 @@
-From 71a18ee332d23177d22ebe5cf3cb4282194e19f0 Mon Sep 17 00:00:00 2001
+From 6ed384111aaac3944d46ccba097ac5310fe34833 Mon Sep 17 00:00:00 2001
 From: Bartosz Bilas <b.bilas@grinn-global.com>
 Date: Thu, 2 Oct 2025 13:08:24 +0200
 Subject: [PATCH] plat: mediatek: use libdram to pass actual memory size to
@@ -8,44 +8,24 @@ Since libdram can obtain the actual memory size at runtime, make it possible
 to pass this value to U-Boot. This allows the bootloader to adapt to boards
 with different DRAM sizes without requiring manual configuration.
 ---
- plat/mediatek/common/mtk_plat_common.h         |  8 ++++++++
- plat/mediatek/mt8188/bl2_plat_setup.c          |  5 +++++
- plat/mediatek/mt8188/drivers/libdram/libdram.h | 13 +++++++++++++
- plat/mediatek/mt8188/drivers/libdram/rules.mk  | 12 ++++++++++++
- plat/mediatek/mt8188/include/platform_def.h    |  2 ++
- plat/mediatek/mt8188/platform_bl2.mk           |  1 +
- 6 files changed, 41 insertions(+)
+ plat/mediatek/mt8188/bl2_plat_setup.c          | 5 +++++
+ plat/mediatek/mt8188/drivers/libdram/libdram.h | 3 +++
+ plat/mediatek/mt8188/drivers/libdram/rules.mk  | 6 ++++++
+ plat/mediatek/mt8188/include/platform_def.h    | 2 ++
+ plat/mediatek/mt8188/platform_bl2.mk           | 1 +
+ 5 files changed, 17 insertions(+)
  create mode 100644 plat/mediatek/mt8188/drivers/libdram/libdram.h
  create mode 100644 plat/mediatek/mt8188/drivers/libdram/rules.mk
 
-diff --git a/plat/mediatek/common/mtk_plat_common.h b/plat/mediatek/common/mtk_plat_common.h
-index 80063ecd9..56aff26ac 100644
---- a/plat/mediatek/common/mtk_plat_common.h
-+++ b/plat/mediatek/common/mtk_plat_common.h
-@@ -21,6 +21,14 @@
- #define JEDEC_MTK_BKID U(4)
- #define JEDEC_MTK_MFID U(0x26)
- 
-+#define BOOT_ARGUMENT_MAGIC	0x504c504c
-+#define BOOT_ARGUMENT		((struct boot_argument *)BOOT_ARGUMENT_LOCATION)
-+
-+struct boot_argument {
-+	unsigned int magic_number;
-+	uint64_t dram_size;
-+};
-+
- struct atf_arg_t {
- 	unsigned int atf_magic;
- 	unsigned int tee_support;
 diff --git a/plat/mediatek/mt8188/bl2_plat_setup.c b/plat/mediatek/mt8188/bl2_plat_setup.c
-index 81158a2fb..a519700b2 100644
+index 38113e3e9..15293166d 100644
 --- a/plat/mediatek/mt8188/bl2_plat_setup.c
 +++ b/plat/mediatek/mt8188/bl2_plat_setup.c
 @@ -12,6 +12,7 @@
  #include <drivers/generic_delay_timer.h>
  #include <plat/common/common_def.h>
  #include <lib/mmio.h>
-+#include "libdram.h"
++#include <libdram.h>
  #include <drivers/io/io_driver.h>
  #include <drivers/io/io_block.h>
  #include <assert.h>
@@ -62,35 +42,19 @@ index 81158a2fb..a519700b2 100644
  	boot_dev_spec->buffer.length = 0x1000000;
 diff --git a/plat/mediatek/mt8188/drivers/libdram/libdram.h b/plat/mediatek/mt8188/drivers/libdram/libdram.h
 new file mode 100644
-index 000000000..1c83af242
+index 000000000..03f55925c
 --- /dev/null
 +++ b/plat/mediatek/mt8188/drivers/libdram/libdram.h
-@@ -0,0 +1,13 @@
-+/*
-+ * Copyright (C) 2025 Grinn sp. z o.o.
-+ *
-+ * These computer program listings and specifications, are the property of
-+ * Grinn sp. z o.o. and shall not be reproduced or copied or used in
-+ * whole or in part without written permission from Grinn sp. z o.o.
-+ */
-+
+@@ -0,0 +1,3 @@
 +#pragma once
-+
-+#include <stdint.h>
 +
 +unsigned long long platform_memory_size(void);
 diff --git a/plat/mediatek/mt8188/drivers/libdram/rules.mk b/plat/mediatek/mt8188/drivers/libdram/rules.mk
 new file mode 100644
-index 000000000..9c1d8a228
+index 000000000..8f7313471
 --- /dev/null
 +++ b/plat/mediatek/mt8188/drivers/libdram/rules.mk
-@@ -0,0 +1,12 @@
-+# Copyright (C) 2025 Grinn
-+#
-+# These computer program listings and specifications, are the property of
-+# Grinn sp. z o.o. and shall not be reproduced or copied or used in
-+# whole or in part without written permission from Grinn sp. z o.o.
-+
+@@ -0,0 +1,6 @@
 +LOCAL_DIR := $(call GET_LOCAL_DIR)
 +
 +MODULE := libdram
@@ -111,17 +75,17 @@ index 23bc1ad7c..1338a223f 100644
  #define MAX_IO_HANDLES			U(4)
  #define MAX_IO_BLOCK_DEVICES			1
 diff --git a/plat/mediatek/mt8188/platform_bl2.mk b/plat/mediatek/mt8188/platform_bl2.mk
-index 98e021578..4f68c7fbc 100644
+index ed760a8fc..db7ff1ac4 100644
 --- a/plat/mediatek/mt8188/platform_bl2.mk
 +++ b/plat/mediatek/mt8188/platform_bl2.mk
-@@ -26,6 +26,7 @@ BL2_SOURCES += lib/cpus/aarch64/cortex_a55.S \
+@@ -25,6 +25,7 @@ BL2_SOURCES += lib/cpus/aarch64/cortex_a55.S \
  	       ${MTK_PLAT}/common/mtk_rgu.c
  
  MODULES-BL2-y += $(MTK_PLAT)/drivers/uart
 +MODULES-BL2-y += $(MTK_PLAT_SOC)/drivers/libdram
- MODULES-BL2-y += $(MTK_PLAT)/drivers/pmic
  MODULES-BL2-y += ${MTK_PLAT}/drivers/wdt
  MODULES-BL2-y += ${MTK_PLAT_SOC}/drivers/pll
+ MODULES-BL2-y += $(MTK_PLAT_SOC)/drivers/pmic_bl2
 -- 
-2.51.0
+2.48.1
 
