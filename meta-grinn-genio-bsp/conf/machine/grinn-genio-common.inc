@@ -1,4 +1,4 @@
-IMAGE_FSTYPES = "wic.img aiotflash.tar.xz aiotflash.tar.xz.sha256sum"
+IMAGE_FSTYPES:append = " aiotflash.tar.xz aiotflash.tar.xz.sha256sum"
 
 #
 # Use fast compression by default to reduce image assembly time.
