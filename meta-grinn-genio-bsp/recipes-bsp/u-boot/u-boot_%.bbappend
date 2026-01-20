@@ -7,6 +7,7 @@ DEFCONFIG_DIR = "${S}/configs"
 SRC_COMMON += " \
     file://0001-arch-mediatek-adjust-memory-size-at-runtime.patch \
     file://0002-board-mt8390-8370-evk-enable-fixup-fdt-memory-at-run.patch \
+    file://0003-phy-increase-default-phy-autoneg-timeout.patch \
     file://${MACHINE}.dts \
     file://${MACHINE}_defconfig \
 "
