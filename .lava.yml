@@ -21,9 +21,9 @@ actions:
         minutes: 40
       to: tftp
       kernel:
-        url: "{{ job.CI_API_V4_URL }}/projects/{{ job.CI_PROJECT_ID }}/jobs/{{ job.BUILD_JOB_ID }}/artifacts/lava/images/fitImage-{{ job.KAS_MACHINE }}.bin?job_token={{ job.CI_JOB_TOKEN }}"
+        url: "{{ job.CI_API_V4_URL }}/projects/{{ job.CI_PROJECT_ID }}/jobs/{{ job.BUILD_JOB_ID }}/artifacts/build/tmp/deploy/images/{{ job.KAS_MACHINE }}/fitImage-{{ job.KAS_MACHINE }}.bin?job_token={{ job.CI_JOB_TOKEN }}"
       nfsrootfs:
-        url: "{{ job.CI_API_V4_URL }}/projects/{{ job.CI_PROJECT_ID }}/jobs/{{ job.BUILD_JOB_ID }}/artifacts/lava/images/{{ job.KAS_TARGET }}-{{ job.KAS_MACHINE }}.tar.xz?job_token={{ job.CI_JOB_TOKEN }}"
+        url: "{{ job.CI_API_V4_URL }}/projects/{{ job.CI_PROJECT_ID }}/jobs/{{ job.BUILD_JOB_ID }}/artifacts/build/tmp/deploy/images/{{ job.KAS_MACHINE }}/{{ job.KAS_TARGET }}-{{ job.KAS_MACHINE }}.tar.xz?job_token={{ job.CI_JOB_TOKEN }}"
         compression: xz
 
   - boot:
