@@ -39,10 +39,22 @@ stages:
 .ci_matrix: &ci_matrix
   parallel:
     matrix:
-      - KAS_MACHINE:
-        - grinn-genio-510-sbc
-        - grinn-genio-700-sbc
-        - grinn-genio-700-evb
+      - KAS_MACHINE: grinn-genio-510-sbc
+        KAS_CONFIG:
+          - default
+          - default:nda
+          - default:nda:deepx
+
+      - KAS_MACHINE: grinn-genio-700-sbc
+        KAS_CONFIG:
+          - default
+          - default:nda
+          - default:nda:deepx
+
+      - KAS_MACHINE: grinn-genio-700-evb
+        KAS_CONFIG:
+          - default
+          - default:nda
 
 build:
   <<: *ci_matrix
@@ -64,6 +76,7 @@ lava:
       parallel:
         matrix:
           - KAS_MACHINE: ['$[[ matrix.KAS_MACHINE ]]']
+            KAS_CONFIG: ['$[[ matrix.KAS_CONFIG ]]']
 
 deploy-public:
   <<: *ci_matrix
@@ -77,11 +90,12 @@ deploy-public:
       parallel:
         matrix:
           - KAS_MACHINE: ['$[[ matrix.KAS_MACHINE ]]']
+            KAS_CONFIG: ['$[[ matrix.KAS_CONFIG ]]']
   script:
     - |
       DATE=${CI_PIPELINE_CREATED_AT%%T*}
       COMMIT=${CI_COMMIT_SHA:0:10}
-      FILE_NAME=$KAS_MACHINE-default-$DATE-$COMMIT.tar.zst
+      FILE_NAME=$KAS_MACHINE-${KAS_CONFIG//:/-}-$DATE-$COMMIT.tar.zst
 
     - mv build/tmp/deploy/images/$KAS_MACHINE/$KAS_TARGET-$KAS_MACHINE.aiotflash.tar.zst $FILE_NAME
     - ci-lib/bin/deploy-public --upload-path genio/$DATE $FILE_NAME
