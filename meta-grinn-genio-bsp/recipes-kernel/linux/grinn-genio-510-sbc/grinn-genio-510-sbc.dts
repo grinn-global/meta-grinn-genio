@@ -1,11 +1,5 @@
-// SPDX-License-Identifier: (GPL-2.0 OR MIT)
-/*
- * Copyright (C) 2025 Grinn sp. z o.o.
- * Author: Maksymilian Jaruga <maksymilian.jaruga@grinn-global.com>
- */
 /dts-v1/;
 #include "mt8370.dtsi"
-#include "grinn-genio-510-700-som.dtsi"
 #include "grinn-genio-510-700-sbc.dtsi"
 
 / {
