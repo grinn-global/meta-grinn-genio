@@ -17,5 +17,11 @@ MACHINE_EXTRA_RRECOMMENDS:append = " \
 "
 
 MACHINE_EXTRA_RRECOMMENDS:append = " \
-	${@bb.utils.contains('MACHINE_FEATURES', 'deepx', ' dx-rt', '', d)} \
+    ${@bb.utils.contains( \
+        'MACHINE_FEATURES', \
+        'deepx', \
+        ' dx-driver dx-rt dx-stream dx-stream-sample', \
+        '', \
+        d \
+    )} \
 "
