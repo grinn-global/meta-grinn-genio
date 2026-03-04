@@ -40,6 +40,7 @@ repos:
   meta-arm:
     url: https://git.yoctoproject.org/meta-arm
     commit: 0f1e7bf92c89759f0ab74cfa5be4ee47b092ad46
+    branch: scarthgap
     layers:
       meta-arm:
       meta-arm-toolchain:
@@ -47,44 +48,54 @@ repos:
   meta-asix:
     url: https://gitlab.com/asix_official/ax88179_series/mtk_genio/yocto/rity/meta-asix
     commit: d2551230c1fc4a0bebd2d2f0b5e3e9a0aee678e2
+    branch: main
 
   meta-browser:
     url: https://gitlab.collabora.com/mediatek/aiot/rity/meta-browser
     commit: e0d522af1130852159b75847649381ad9f11efbc
+    branch: mediatek/scarthgap
     layers:
       meta-chromium:
 
   meta-clang:
     url: https://github.com/kraj/meta-clang
     commit: b4532c75af7b1957b10cc4d5377fc4cfa0b1cbf6
+    branch: scarthgap-clang20
 
   meta-lts-mixins:
     url: https://git.yoctoproject.org/meta-lts-mixins
     commit: 96deb45139df027473faf0938fe006d33c45c375
+    branch: scarthgap/rust
 
   meta-mediatek-bluedroid:
     url: https://gitlab.com/mediatek/aiot/rity/meta-mediatek-bluedroid
     commit: fcce714cf82cedbf2a086f776c982de092ac9768
+    branch: scarthgap
 
   meta-mediatek-bsp:
     url: https://gitlab.com/mediatek/aiot/rity/meta-mediatek-bsp
     commit: 83df1ff60275a30c4d23254371097c84dd7fbe2d
+    branch: release/rity-scarthgap
 
   meta-mediatek-demo:
     url: https://gitlab.com/mediatek/aiot/rity/meta-mediatek-demo
     commit: 815a43e8c1d5850c7d4d633d0dd4d532186b859f
+    branch: release/rity-scarthgap
 
   meta-mediatek-tsn:
     url: https://gitlab.com/mediatek/aiot/rity/meta-mediatek-tsn
     commit: 9e780f424ba2b1f56090113e96acf8f90aabf0ed
+    branch: release/rity-scarthgap
 
   meta-nn:
     url: https://gitlab.com/mediatek/aiot/rity/meta-nn
     commit: f6efbbe11ac8ad1a4ae7fe831b1995b166c1c155
+    branch: release/rity-scarthgap
 
   meta-openembedded:
     url: https://git.openembedded.org/meta-openembedded
     commit: e621da947048842109db1b4fd3917a02e0501aa2
+    branch: scarthgap
     layers:
       meta-multimedia:
       meta-networking:
@@ -95,6 +106,7 @@ repos:
   meta-rity:
     url: https://gitlab.com/mediatek/aiot/rity/meta-rity
     commit: fe503c3c5944ae044816e3277310a379250c15b5
+    branch: release/rity-scarthgap
     layers:
       meta:
       meta-rity-bringup:
@@ -103,14 +115,17 @@ repos:
   meta-security:
     url: https://git.yoctoproject.org/meta-security
     commit: bc865c5276c2ab4031229916e8d7c20148dfbac3
+    branch: scarthgap
 
   meta-tensorflow:
     url: https://git.yoctoproject.org/meta-tensorflow.git
     commit: eeee54cfa3c51c1fd99604a0d5f173096bdcf1da
+    branch: scarthgap
 
   poky:
     url: https://git.yoctoproject.org/poky
     commit: e3ce89324da1e33c17c9180ef846f41d92616254
+    branch: scarthgap
     layers:
       meta:
       meta-poky:
