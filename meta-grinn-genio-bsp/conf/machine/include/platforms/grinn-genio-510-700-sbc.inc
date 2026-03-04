@@ -25,3 +25,8 @@ MACHINE_EXTRA_RRECOMMENDS:append = " \
         d \
     )} \
 "
+
+MACHINE_EXTRA_RRECOMMENDS:append = " \
+        bluez5 \
+        firmware-nxp-wifi-nxp8987-sdio \
+"
