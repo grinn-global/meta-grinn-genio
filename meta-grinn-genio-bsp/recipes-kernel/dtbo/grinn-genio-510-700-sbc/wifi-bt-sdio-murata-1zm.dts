@@ -1,0 +1,58 @@
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/pinctrl/mediatek,mt8188-pinfunc.h>
+#include <dt-bindings/gpio/gpio.h>
+
+/ {
+	fragment@0 {
+		target = <&pio>;
+
+		__overlay__ {
+			uart1_rtscts_pins: uart1@rtscts {
+				pins_rtscts {
+					pinmux = <PINMUX_GPIO86__FUNC_O_UTXD1>,
+						 <PINMUX_GPIO87__FUNC_I1_URXD1>,
+						 <PINMUX_GPIO88__FUNC_O_URTS1>,
+						 <PINMUX_GPIO89__FUNC_I1_UCTS1>;
+					bias-pull-up;
+				};
+			};
+
+			wifi_pwrseq_pins: wifi@pwrseq {
+				pins_wifi_enable {
+					pinmux = <PINMUX_GPIO149__FUNC_B_GPIO149>;
+					output-low;
+				};
+			};
+		};
+	};
+
+	fragment@1 {
+		target = <&uart1>;
+
+		__overlay__ {
+			pinctrl-0 = <&uart1_rtscts_pins>;
+			pinctrl-names = "default";
+			uart-has-rtscts;
+
+			bluetooth {
+				compatible = "nxp,88w8987-bt";
+				fw-init-baudrate = <115200>;
+			};
+		};
+	};
+
+	fragment@2 {
+		target = <&wifi_pwrseq>;
+
+		__overlay__ {
+			pinctrl-names = "default";
+			pinctrl-0 = <&wifi_pwrseq_pins>;
+			status = "okay";
+			post-power-on-delay-ms = <100>;
+			power-off-delay-us = <500000>;
+			reset-gpios = <&pio 149 GPIO_ACTIVE_LOW>;
+		};
+	};
+};

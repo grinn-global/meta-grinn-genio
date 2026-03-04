@@ -15,6 +15,7 @@ SRC_URI:append:grinn-genio-platform = " \
 
 SRC_URI:append:grinn-genio-510-700-sbc = " \
         file://camera-common.dtsi \
+        file://wifi-bt-sdio-murata-1zm.dts \
 "
 
 SRC_URI:append:grinn-genio-700-evb = " \
