@@ -8,10 +8,15 @@ spec:
       type: boolean
       default: true
       description: Use shared downloads mirror
+    deploy-public:
+      type: boolean
+      default: false
+      description: Deploy to public HTTP server
 
 ---
 
 include:
+  - component: $CI_SERVER_FQDN/grinn/ci/ci-lib/deploy-public@deploy-public
   - component: $CI_SERVER_FQDN/grinn/ci/yocto/kas/workflow@1
   - component: $CI_SERVER_FQDN/grinn/ci/yocto/kas/build@1
     inputs:
@@ -24,6 +29,7 @@ stages:
   - ci-kas
   - build
   - test
+  - deploy
 
 .ci_matrix: &ci_matrix
   parallel:
@@ -53,3 +59,24 @@ lava:
       parallel:
         matrix:
           - KAS_MACHINE: ['$[[ matrix.KAS_MACHINE ]]']
+
+deploy-public:
+  <<: *ci_matrix
+  variables:
+    KAS_TARGET: rity-demo-image
+  rules:
+    - if: $[[ inputs.deploy-public ]] == "true"
+  needs:
+    - job: build
+      artifacts: true
+      parallel:
+        matrix:
+          - KAS_MACHINE: ['$[[ matrix.KAS_MACHINE ]]']
+  script:
+    - |
+      DATE=${CI_PIPELINE_CREATED_AT%%T*}
+      COMMIT=${CI_COMMIT_SHA:0:10}
+      FILE_NAME=$KAS_MACHINE-default-$DATE-$COMMIT.tar.zst
+
+    - mv build/tmp/deploy/images/$KAS_MACHINE/$KAS_TARGET-$KAS_MACHINE.aiotflash.tar.zst $FILE_NAME
+    - ci-lib/bin/deploy-public --upload-path genio/$DATE $FILE_NAME
