@@ -1,11 +1,4 @@
-IMAGE_FSTYPES:append = " aiotflash.tar.xz aiotflash.tar.xz.sha256sum tar.xz"
-
-#
-# Use fast compression by default to reduce image assembly time.
-# For releases where size is important it can be changed to Yocto default "-9"
-#
-
-XZ_COMPRESSION_LEVEL ?= "-3"
+IMAGE_FSTYPES:append = " aiotflash.tar.zst aiotflash.tar.zst.sha256sum tar.zst"
 
 #
 # Add devicetree directory to aiotflash.tar
