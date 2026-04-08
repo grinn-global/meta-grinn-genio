@@ -2,7 +2,7 @@ MACHINEOVERRIDES =. "grinn-genio-platform:"
 
 KERNEL_DEVICETREE = "mediatek/${MACHINE}.dtb"
 
-IMAGE_FSTYPES:append = " aiotflash.tar.zst aiotflash.tar.zst.sha256sum tar.zst"
+IMAGE_FSTYPES = "wic.img aiotflash.tar.zst aiotflash.tar.zst.sha256sum tar.zst"
 
 do_image_aiotflash[depends] += "virtual/dtb:do_deploy"
 EXTRA_IMAGEDEPENDS += "virtual/dtb"
