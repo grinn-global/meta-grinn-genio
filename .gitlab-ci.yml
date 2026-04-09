@@ -98,6 +98,5 @@ deploy-public:
       DATE=${CI_PIPELINE_CREATED_AT%%T*}
       COMMIT=${CI_COMMIT_SHA:0:10}
       FILE_NAME=$KAS_MACHINE-${KAS_CONFIG//:/-}-$DATE-$COMMIT.tar.zst
-
     - mv build/tmp/deploy/images/$KAS_MACHINE/$KAS_TARGET-$KAS_MACHINE.aiotflash.tar.zst $FILE_NAME
-    - ci-lib/bin/deploy-public --upload-path genio/$DATE $FILE_NAME
+    - ci-lib/bin/deploy-public --upload-path genio/$KAS_MACHINE/$DATE $FILE_NAME
