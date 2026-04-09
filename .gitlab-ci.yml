@@ -64,7 +64,8 @@ build:
     expire_in: 1d
     paths:
       - build.log
-      - build/tmp/deploy/images/*/*.tar.zst
+      - build/tmp/deploy/images/*/*.rootfs.aiotflash.tar.zst
+      - build/tmp/deploy/images/*/*.rootfs.tar.zst
       - build/tmp/deploy/images/*/fitImage-*.bin
 
 lava:
