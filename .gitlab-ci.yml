@@ -65,6 +65,7 @@ build:
     paths:
       - build.log
       - build/tmp/deploy/images/*/*.rootfs.aiotflash.tar.zst
+      - build/tmp/deploy/images/*/*.rootfs.aiotflash.tar.zst.sha256sum
       - build/tmp/deploy/images/*/*.rootfs.tar.zst
       - build/tmp/deploy/images/*/fitImage-*.bin
 
