@@ -5,6 +5,7 @@ local_conf_header:
   deepx: |
     MACHINE_FEATURES:append = " deepx"
     BBMASK += "meta-deepx-m1/recipes-runtime/external/libonnxruntime_.*\.bb"
+    PREFERRED_VERSION_dx-rt = "3.2.0"
 
 repos:
   meta-deepx-m1:
