@@ -25,6 +25,44 @@
 					output-low;
 				};
 			};
+
+			mmc2_default_pins: mmc2-default-pins {
+				pins-clk {
+					pinmux = <PINMUX_GPIO170__FUNC_B1_MSDC2_CLK>;
+					drive-strength = <8>;
+					bias-pull-down = <0x66>;
+				};
+
+				pins-cmd-dat {
+					pinmux = <PINMUX_GPIO169__FUNC_B1_MSDC2_CMD>,
+						 <PINMUX_GPIO171__FUNC_B1_MSDC2_DAT0>,
+						 <PINMUX_GPIO172__FUNC_B1_MSDC2_DAT1>,
+						 <PINMUX_GPIO173__FUNC_B1_MSDC2_DAT2>,
+						 <PINMUX_GPIO174__FUNC_B1_MSDC2_DAT3>;
+					input-enable;
+					drive-strength = <6>;
+					bias-pull-up = <0x65>;
+				};
+			};
+
+			mmc2_uhs_pins: mmc2-uhs-pins {
+				pins-clk {
+					pinmux = <PINMUX_GPIO170__FUNC_B1_MSDC2_CLK>;
+					drive-strength = <8>;
+					bias-pull-down = <0x66>;
+				};
+
+				pins-cmd-dat {
+					pinmux = <PINMUX_GPIO169__FUNC_B1_MSDC2_CMD>,
+						 <PINMUX_GPIO171__FUNC_B1_MSDC2_DAT0>,
+						 <PINMUX_GPIO172__FUNC_B1_MSDC2_DAT1>,
+						 <PINMUX_GPIO173__FUNC_B1_MSDC2_DAT2>,
+						 <PINMUX_GPIO174__FUNC_B1_MSDC2_DAT3>;
+					input-enable;
+					drive-strength = <6>;
+					bias-pull-up = <0x65>;
+				};
+			};
 		};
 	};
 
@@ -53,6 +91,30 @@
 			post-power-on-delay-ms = <100>;
 			power-off-delay-us = <500000>;
 			reset-gpios = <&pio 149 GPIO_ACTIVE_LOW>;
+		};
+	};
+
+	fragment@3 {
+		target = <&mmc2>;
+
+		__overlay__ {
+			status = "okay";
+			pinctrl-names = "default", "state_uhs";
+			pinctrl-0 = <&mmc2_default_pins>;
+			pinctrl-1 = <&mmc2_uhs_pins>;
+			bus-width = <4>;
+			max-frequency = <200000000>;
+			cap-sd-highspeed;
+			sd-uhs-sdr104;
+			keep-power-in-suspend;
+			enable-sdio-wakeup;
+			cap-sdio-async-int;
+			cap-sdio-irq;
+			no-mmc;
+			no-sd;
+			non-removable;
+			vmmc-supply = <&tps51397a_buck_3v3>;
+			mmc-pwrseq = <&wifi_pwrseq>;
 		};
 	};
 };
