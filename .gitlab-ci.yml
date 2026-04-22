@@ -12,15 +12,11 @@ spec:
       type: boolean
       default: true
       description: Use git mirrors
-    deploy-public:
-      type: boolean
-      default: false
-      description: Deploy to public HTTP server
 
 ---
 
 include:
-  - component: $CI_SERVER_FQDN/grinn/ci/ci-lib/deploy-public@deploy-public
+  - component: $CI_SERVER_FQDN/grinn/ci/yocto/kas/deploy-public@deploy-on-tag
   - component: $CI_SERVER_FQDN/grinn/ci/yocto/kas/workflow@2
   - component: $CI_SERVER_FQDN/grinn/ci/yocto/kas/build@2
     inputs:
@@ -84,8 +80,7 @@ deploy-public:
   <<: *ci_matrix
   variables:
     KAS_TARGET: rity-demo-image
-  rules:
-    - if: $[[ inputs.deploy-public ]] == "true"
+    DEPLOY_PUBLIC_FILE: build/tmp/deploy/images/$KAS_MACHINE/$KAS_TARGET-$KAS_MACHINE.rootfs.aiotflash.tar.zst
   needs:
     - job: build
       artifacts: true
@@ -93,10 +88,3 @@ deploy-public:
         matrix:
           - KAS_MACHINE: ['$[[ matrix.KAS_MACHINE ]]']
             KAS_CONFIG: ['$[[ matrix.KAS_CONFIG ]]']
-  script:
-    - |
-      DATE=${CI_PIPELINE_CREATED_AT%%T*}
-      COMMIT=${CI_COMMIT_SHA:0:10}
-      FILE_NAME=$KAS_MACHINE-${KAS_CONFIG//:/-}-$DATE-$COMMIT.tar.zst
-    - mv build/tmp/deploy/images/$KAS_MACHINE/$KAS_TARGET-$KAS_MACHINE.rootfs.aiotflash.tar.zst $FILE_NAME
-    - ci-lib/bin/deploy-public --upload-path genio/$KAS_MACHINE/$DATE $FILE_NAME
