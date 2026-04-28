@@ -1,0 +1,12 @@
+[Unit]
+Description=Load btnxpuart after WiFi combo firmware init
+After=multi-user.target systemd-modules-load.service
+Wants=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/sbin/modprobe btnxpuart
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
