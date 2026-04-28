@@ -28,5 +28,6 @@ MACHINE_EXTRA_RRECOMMENDS:append = " \
 
 MACHINE_EXTRA_RRECOMMENDS:append = " \
         bluez5 \
+        btnxpuart-fix \
         firmware-nxp-wifi-nxp8987-sdio \
 "
