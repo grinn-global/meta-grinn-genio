@@ -1,4 +1,4 @@
-# meta-grinn-astra
+# meta-grinn-genio
 
 Yocto BSP layer for Grinn hardware based on the MediaTek Genio SoCs.
 
