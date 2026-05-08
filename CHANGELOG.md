@@ -1,3 +1,8 @@
+# [1.0.2]
+
+## Fixed
+- Weston not starting when no output is connected during boot
+
 # [1.0.1]
 
 ## Fixed
