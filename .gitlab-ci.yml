@@ -34,9 +34,11 @@ include:
   - component: $CI_SERVER_FQDN/grinn/ci/yocto/kas/lava@3
     inputs:
       lava-test-definitions-revision: $[[ inputs.lava-test-definitions-revision ]]
+  - component: $CI_SERVER_FQDN/grinn/ci/yocto/kas/release-tag@3
 
 stages:
   - ci-kas
+  - release-tag
   - build
   - test
   - deploy
