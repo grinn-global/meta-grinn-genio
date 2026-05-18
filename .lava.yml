@@ -49,6 +49,7 @@ actions:
         - setenv bootargs "console=ttyS0,921600 root=/dev/nfs rw nfsroot={SERVER_IP}:{NFSROOTFS},v3,tcp ip=dhcp rootwait"
         - tftpboot {KERNEL}
         - "" # Force a prompt return
+        - setenv boot_conf "${boot_conf}#conf-wifi-bt-sdio-murata-1zm.dtbo"
         - bootm ${kerneladdr}${boot_conf}
       soft_reboot: reset
       auto_login:
@@ -87,3 +88,10 @@ actions:
           name: deepx-test
           parameters:
             KAS_CONFIG: "{{ job.KAS_CONFIG }}"
+        - from: git
+          repository: git@gitlab.grinndev.ovh:grinn/ci/lava/lava-test-definitions.git
+          path: automated/linux/wifi/wifi-test.yaml
+          name: wifi-test
+          parameters:
+            WIFI_IFACE: "mlan0"
+            DEVICE: "{{ job.KAS_MACHINE }}"
