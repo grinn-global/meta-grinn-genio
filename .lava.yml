@@ -49,7 +49,7 @@ actions:
         - setenv bootargs "console=ttyS0,921600 root=/dev/nfs rw nfsroot={SERVER_IP}:{NFSROOTFS},v3,tcp ip=dhcp rootwait"
         - tftpboot {KERNEL}
         - "" # Force a prompt return
-        - bootm
+        - bootm ${kerneladdr}${boot_conf}
       soft_reboot: reset
       auto_login:
         login_prompt: "login:.*"
