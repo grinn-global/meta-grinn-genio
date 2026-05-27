@@ -58,6 +58,7 @@ actions:
         - "root@{{ job.KAS_MACHINE }}:~#"
         - "root@.*:~#"
         - "~#"
+      failure_message: 'Kernel panic|Oops(?: -|:)|Unable to handle kernel|Internal error|BUG:|Call trace:|segfault'
 
   - test:
       timeout:
