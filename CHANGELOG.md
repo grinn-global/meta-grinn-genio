@@ -1,3 +1,8 @@
+# [1.1.0]
+
+## Added
+- Support for boot over network
+
 # [1.0.2]
 
 ## Fixed
