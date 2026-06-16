@@ -1,3 +1,5 @@
+require grinn-genio-som.inc
+
 MACHINEOVERRIDES =. "grinn-genio-510-700-som:"
 
 OPTEE_DRAM_SIZE = "0x200000000"
