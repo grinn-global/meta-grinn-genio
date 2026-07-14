@@ -53,7 +53,7 @@ repos:
 
   meta-browser:
     url: https://gitlab.collabora.com/mediatek/aiot/rity/meta-browser
-    commit: e0d522af1130852159b75847649381ad9f11efbc
+    commit: f50e7319de63d6c36810cfbfac417e18233d430e
     branch: mediatek/scarthgap
     layers:
       meta-chromium:
@@ -75,7 +75,7 @@ repos:
 
   meta-mediatek-bsp:
     url: https://gitlab.com/mediatek/aiot/rity/meta-mediatek-bsp
-    commit: 83df1ff60275a30c4d23254371097c84dd7fbe2d
+    commit: a1755682201aa56b4bfa0d4e9cc2306ef6add5ca
     branch: release/rity-scarthgap
 
   meta-mediatek-demo:
@@ -90,7 +90,7 @@ repos:
 
   meta-nn:
     url: https://gitlab.com/mediatek/aiot/rity/meta-nn
-    commit: f6efbbe11ac8ad1a4ae7fe831b1995b166c1c155
+    commit: a2209426fa130893e1d4bd9e2824b6d3370575f1
     branch: release/rity-scarthgap
 
   meta-openembedded:
@@ -106,7 +106,7 @@ repos:
 
   meta-rity:
     url: https://gitlab.com/mediatek/aiot/rity/meta-rity
-    commit: fe503c3c5944ae044816e3277310a379250c15b5
+    commit: 7b467fecf8820e714f5fffcaa1910758e392233c
     branch: release/rity-scarthgap
     layers:
       meta:
