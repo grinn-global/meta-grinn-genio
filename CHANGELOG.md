@@ -1,3 +1,14 @@
+# [2.0.0]
+
+## Removed
+- Support for `grinn-genio-700-evb`
+
+## Fixed
+- Audio playback on `grinn-genio-510-sbc`
+
+## Changed
+- Rebased on MediaTek Rity v25.1.1
+
 # [1.1.0]
 
 ## Added
