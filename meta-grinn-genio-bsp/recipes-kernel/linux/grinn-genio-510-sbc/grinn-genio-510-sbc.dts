@@ -6,3 +6,7 @@
 	model = "Grinn GenioSBC-510";
 	compatible = "grinn,genio-510-sbc", "mediatek,mt8370", "mediatek,mt8188";
 };
+
+&sound {
+	model = "mt8370-evk";
+};

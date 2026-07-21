@@ -548,7 +548,6 @@
 
 &sound {
 	compatible = "mediatek,mt8188-mt6359";
-	model = "mt8390-evk";
 	pinctrl-names = "default";
 	pinctrl-0 = <&audio_default_pins>;
 	status = "okay";

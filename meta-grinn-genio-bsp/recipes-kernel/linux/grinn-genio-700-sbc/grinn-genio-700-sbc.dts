@@ -7,3 +7,7 @@
 	compatible = "grinn,genio-700-sbc", "mediatek,mt8390", "mediatek,mt8188";
 };
 
+&sound {
+	model = "mt8390-evk";
+};
+
