@@ -31,3 +31,5 @@ MACHINE_EXTRA_RRECOMMENDS:append = " \
         btnxpuart-fix \
         firmware-nxp-wifi-nxp8987-sdio \
 "
+
+KERNEL_DEVICETREE_OVERLAYS_AUTOLOAD ?= "video.dtbo apusys.dtbo display-hdmi.dtbo display-dp.dtbo"

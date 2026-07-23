@@ -27,8 +27,6 @@ local_conf_header:
     CONF_VERSION = "2"
     LICENSE_FLAGS_ACCEPTED = "commercial commercial_libav commercial_x264"
     IMAGE_ROOTFS_EXTRA_SPACE = "200000"
-    KERNEL_DEVICETREE_OVERLAYS_AUTOLOAD:genio-700 += "video.dtbo apusys.dtbo"
-    KERNEL_DEVICETREE_OVERLAYS_AUTOLOAD:genio-510 += "video.dtbo apusys.dtbo"
     TFLITE_PREBUILT = "0"
 
 bblayers_conf_header:
