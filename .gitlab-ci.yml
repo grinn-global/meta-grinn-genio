@@ -58,11 +58,6 @@ stages:
           - default:nda
           - default:nda:deepx
 
-      - KAS_MACHINE: grinn-genio-700-evb
-        KAS_CONFIG:
-          - default
-          - default:nda
-
 .ci_build_artifacts: &ci_build_artifacts
   artifacts:
     expire_in: 4h
