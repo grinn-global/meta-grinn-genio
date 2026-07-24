@@ -1,6 +1,5 @@
 FILESEXTRAPATHS:prepend:grinn-genio-platform := "${THISDIR}/common:"
 FILESEXTRAPATHS:prepend:grinn-genio-510-700-sbc := "${THISDIR}/grinn-genio-510-700-sbc:"
-FILESEXTRAPATHS:prepend:grinn-genio-700-evb := "${THISDIR}/grinn-genio-700-evb:"
 
 SRC_URI:append:grinn-genio-platform = " \
         file://audio-sof.dts \
@@ -16,10 +15,4 @@ SRC_URI:append:grinn-genio-platform = " \
 SRC_URI:append:grinn-genio-510-700-sbc = " \
         file://camera-common.dtsi \
         file://wifi-bt-sdio-murata-1zm.dts \
-"
-
-SRC_URI:append:grinn-genio-700-evb = " \
-        file://camera-common.dtsi \
-	file://display-dsi-startek-kd070fhfid015.dts \
-        file://display-dsi-startek-kd070fhfid078.dts \
 "

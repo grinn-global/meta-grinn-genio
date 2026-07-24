@@ -12,8 +12,3 @@ SRC_URI:append:grinn-genio-510-700-sbc = " \
     file://0001-mtk_dp-add-support-for-direct-display-port-interface.patch \
     file://eth.cfg \
 "
-SRC_URI:append:grinn-genio-700-evb = " \
-    file://0001-mtk_dp-add-support-for-direct-display-port-interface.patch \
-    file://eth.cfg \
-    file://wwan.cfg \
-"
