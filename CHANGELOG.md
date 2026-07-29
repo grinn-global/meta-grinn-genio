@@ -1,3 +1,8 @@
+# [2.1.0]
+
+## Changed
+- Take netboot configuration from `meta-grinn-common-netboot`
+
 # [2.0.0]
 
 ## Removed
