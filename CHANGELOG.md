@@ -1,3 +1,8 @@
+# [2.2.0]
+
+## Changed
+- Bump `meta-deepx-m1`: dx-rt v3.3.2, dx-driver v2.4.1, dx-stream v3.0.1
+
 # [2.1.0]
 
 ## Changed
