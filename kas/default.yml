@@ -38,7 +38,7 @@ bblayers_conf_header:
 repos:
   meta-arm:
     url: https://git.yoctoproject.org/meta-arm
-    commit: 0f1e7bf92c89759f0ab74cfa5be4ee47b092ad46
+    commit: a81c19915b5b9e71ed394032e9a50fd06919e1cd
     branch: scarthgap
     layers:
       meta-arm:
@@ -68,12 +68,12 @@ repos:
 
   meta-mediatek-bluedroid:
     url: https://gitlab.com/mediatek/aiot/rity/meta-mediatek-bluedroid
-    commit: fcce714cf82cedbf2a086f776c982de092ac9768
+    commit: bfb2c6f718b76465e940533b85089eea25f4b6c6
     branch: scarthgap
 
   meta-mediatek-bsp:
     url: https://gitlab.com/mediatek/aiot/rity/meta-mediatek-bsp
-    commit: a1755682201aa56b4bfa0d4e9cc2306ef6add5ca
+    commit: 24dad2a50ad27ea2d0c2e65d8389e5ae36e2f1e6
     branch: release/rity-scarthgap
 
   meta-mediatek-demo:
@@ -88,12 +88,12 @@ repos:
 
   meta-nn:
     url: https://gitlab.com/mediatek/aiot/rity/meta-nn
-    commit: a2209426fa130893e1d4bd9e2824b6d3370575f1
+    commit: 9bf72cf539cec4ab6ce5c4ae64daa201af889875
     branch: release/rity-scarthgap
 
   meta-openembedded:
     url: https://git.openembedded.org/meta-openembedded
-    commit: e621da947048842109db1b4fd3917a02e0501aa2
+    commit: ae7dfb12245c7f9b9a353499e2688015bd4e6413
     branch: scarthgap
     layers:
       meta-multimedia:
@@ -104,7 +104,7 @@ repos:
 
   meta-rity:
     url: https://gitlab.com/mediatek/aiot/rity/meta-rity
-    commit: 7b467fecf8820e714f5fffcaa1910758e392233c
+    commit: 4542a23fdd0c3384230efa73e402d597f10425c7
     branch: release/rity-scarthgap
     layers:
       meta:
@@ -113,7 +113,7 @@ repos:
 
   meta-security:
     url: https://git.yoctoproject.org/meta-security
-    commit: bc865c5276c2ab4031229916e8d7c20148dfbac3
+    commit: b13f1705d723650de61277670c8a76aadea4cfdd
     branch: scarthgap
 
   meta-tensorflow:
@@ -123,7 +123,7 @@ repos:
 
   poky:
     url: https://git.yoctoproject.org/poky
-    commit: e3ce89324da1e33c17c9180ef846f41d92616254
+    commit: d4576e3c081a7ee7b57d48421c4c4f491cb4defe
     branch: scarthgap
     layers:
       meta:
