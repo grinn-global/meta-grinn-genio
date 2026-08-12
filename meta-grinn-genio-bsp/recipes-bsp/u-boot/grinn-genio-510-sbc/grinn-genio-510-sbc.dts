@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0 OR MIT
 /*
- * Copyright (C) 2025 Grinn sp. z o.o.
- * Author: Bartosz Bilas <bartosz.bilas@grinn-global.com>
+ * Copyright (C) 2023 MediaTek Inc.
+ * Copyright (C) 2025-2026 Grinn sp. z o.o.
  */
 
 /dts-v1/;
