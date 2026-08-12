@@ -1,3 +1,9 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+/*
+ * Copyright (C) 2023 MediaTek Inc.
+ * Copyright (C) 2025-2026 Grinn sp. z o.o.
+ */
+
 #include "grinn-genio-510-700-som.dtsi"
 #include <dt-bindings/gpio/gpio.h>
 
