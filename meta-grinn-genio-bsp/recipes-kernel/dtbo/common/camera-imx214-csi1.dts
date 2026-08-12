@@ -1,3 +1,9 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Copyright (C) 2023 MediaTek Inc.
+ * Copyright (C) 2026 Grinn sp. z o.o.
+ */
+
 /dts-v1/;
 /plugin/;
 
