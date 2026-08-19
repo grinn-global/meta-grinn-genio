@@ -1,3 +1,8 @@
+# [2.3.0]
+
+## Added
+- Demo KAS configuration with `meta-grinn-common-demo`
+
 # [2.2.0]
 
 ## Changed
