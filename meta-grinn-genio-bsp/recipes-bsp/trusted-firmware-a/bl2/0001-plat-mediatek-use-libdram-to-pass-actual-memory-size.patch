@@ -8,28 +8,15 @@ Since libdram can obtain the actual memory size at runtime, make it possible
 to pass this value to U-Boot. This allows the bootloader to adapt to boards
 with different DRAM sizes without requiring manual configuration.
 ---
- plat/mediatek/mt8188/bl2_plat_setup.c          | 5 +++++
- plat/mediatek/mt8188/drivers/libdram/libdram.h | 3 +++
- plat/mediatek/mt8188/drivers/libdram/rules.mk  | 6 ++++++
- plat/mediatek/mt8188/include/platform_def.h    | 2 ++
- plat/mediatek/mt8188/platform_bl2.mk           | 1 +
- 5 files changed, 17 insertions(+)
- create mode 100644 plat/mediatek/mt8188/drivers/libdram/libdram.h
- create mode 100644 plat/mediatek/mt8188/drivers/libdram/rules.mk
+ plat/mediatek/mt8188/bl2_plat_setup.c       | 4 ++++
+ plat/mediatek/mt8188/include/libdram.h      | 1 +
+ plat/mediatek/mt8188/include/platform_def.h | 2 ++
+ 3 files changed, 7 insertions(+)
 
 diff --git a/plat/mediatek/mt8188/bl2_plat_setup.c b/plat/mediatek/mt8188/bl2_plat_setup.c
-index 38113e3e9..15293166d 100644
 --- a/plat/mediatek/mt8188/bl2_plat_setup.c
 +++ b/plat/mediatek/mt8188/bl2_plat_setup.c
-@@ -12,6 +12,7 @@
- #include <drivers/generic_delay_timer.h>
- #include <plat/common/common_def.h>
- #include <lib/mmio.h>
-+#include <libdram.h>
- #include <drivers/io/io_driver.h>
- #include <drivers/io/io_block.h>
- #include <assert.h>
-@@ -391,6 +392,10 @@ void bl2_platform_setup(void)
+@@ -398,6 +398,10 @@ void bl2_platform_setup(void)
  	load_partition_table(GPT_IMAGE_ID);
  	blkdev_set_dramk_data_offset(get_part_addr("dramk"));
  	mt_mem_init();
@@ -40,52 +27,27 @@ index 38113e3e9..15293166d 100644
  	/* change emmc read buffer to DRAM */
  	boot_dev_spec->buffer.offset = 0x41000000;
  	boot_dev_spec->buffer.length = 0x1000000;
-diff --git a/plat/mediatek/mt8188/drivers/libdram/libdram.h b/plat/mediatek/mt8188/drivers/libdram/libdram.h
-new file mode 100644
-index 000000000..03f55925c
---- /dev/null
-+++ b/plat/mediatek/mt8188/drivers/libdram/libdram.h
-@@ -0,0 +1,3 @@
-+#pragma once
-+
+diff --git a/plat/mediatek/mt8188/include/libdram.h b/plat/mediatek/mt8188/include/libdram.h
+--- a/plat/mediatek/mt8188/include/libdram.h
++++ b/plat/mediatek/mt8188/include/libdram.h
+@@ -14,5 +14,6 @@
+ void i2c_hw_init(void);
+ unsigned int pmic_init(void);
+ void mt_mem_init(void);
 +unsigned long long platform_memory_size(void);
-diff --git a/plat/mediatek/mt8188/drivers/libdram/rules.mk b/plat/mediatek/mt8188/drivers/libdram/rules.mk
-new file mode 100644
-index 000000000..8f7313471
---- /dev/null
-+++ b/plat/mediatek/mt8188/drivers/libdram/rules.mk
-@@ -0,0 +1,6 @@
-+LOCAL_DIR := $(call GET_LOCAL_DIR)
-+
-+MODULE := libdram
-+
-+PLAT_INCLUDES += -I${LOCAL_DIR}/
-+$(eval $(call MAKE_MODULE,$(MODULE),$(LOCAL_SRCS-y),$(MTK_BL)))
+ 
+ #endif /* LIBDRAM_H */
 diff --git a/plat/mediatek/mt8188/include/platform_def.h b/plat/mediatek/mt8188/include/platform_def.h
-index 23bc1ad7c..1338a223f 100644
 --- a/plat/mediatek/mt8188/include/platform_def.h
 +++ b/plat/mediatek/mt8188/include/platform_def.h
 @@ -303,6 +303,8 @@
  #define BL2_BASE		(0x201000)
  #define BL2_LIMIT		(0x400000)
  
-+#define BOOT_ARGUMENT_LOCATION  (0x40000100)
++#define BOOT_ARGUMENT_LOCATION	(0x40000100)
 +
  #define MAX_IO_DEVICES			U(3)
  #define MAX_IO_HANDLES			U(4)
  #define MAX_IO_BLOCK_DEVICES			1
-diff --git a/plat/mediatek/mt8188/platform_bl2.mk b/plat/mediatek/mt8188/platform_bl2.mk
-index ed760a8fc..db7ff1ac4 100644
---- a/plat/mediatek/mt8188/platform_bl2.mk
-+++ b/plat/mediatek/mt8188/platform_bl2.mk
-@@ -25,6 +25,7 @@ BL2_SOURCES += lib/cpus/aarch64/cortex_a55.S \
- 	       ${MTK_PLAT}/common/mtk_rgu.c
- 
- MODULES-BL2-y += $(MTK_PLAT)/drivers/uart
-+MODULES-BL2-y += $(MTK_PLAT_SOC)/drivers/libdram
- MODULES-BL2-y += ${MTK_PLAT}/drivers/wdt
- MODULES-BL2-y += ${MTK_PLAT_SOC}/drivers/pll
- MODULES-BL2-y += $(MTK_PLAT_SOC)/drivers/pmic_bl2
 -- 
 2.48.1
-
