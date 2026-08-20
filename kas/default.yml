@@ -35,6 +35,8 @@ bblayers_conf_header:
     BBPATH = "${TOPDIR}"
     BBFILES ?= ""
 
+    LAYERSERIES_COMPAT_meta-tensorflow:append = " scarthgap"
+
 repos:
   meta-arm:
     url: https://git.yoctoproject.org/meta-arm
@@ -118,8 +120,8 @@ repos:
 
   meta-tensorflow:
     url: https://git.yoctoproject.org/meta-tensorflow.git
-    commit: eeee54cfa3c51c1fd99604a0d5f173096bdcf1da
-    branch: scarthgap
+    commit: 6e060172d169db361942f92b779fbe447bf000f4
+    branch: master
 
   poky:
     url: https://git.yoctoproject.org/poky
