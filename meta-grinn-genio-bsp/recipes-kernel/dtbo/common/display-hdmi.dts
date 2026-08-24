@@ -41,4 +41,12 @@
 			};
 		};
 	};
+
+	fragment@4 {
+		target = <&cec>;
+
+		__overlay__ {
+			status = "okay";
+		};
+	};
 };
