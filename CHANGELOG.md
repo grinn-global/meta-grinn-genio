@@ -1,3 +1,14 @@
+# [3.0.0]
+
+## Removed
+- Deprecated fixes for weston-init and flatbuffers
+
+## Changed
+- Rebased on MediaTek Rity v26.0
+- Enable HDMI CEC by default
+- Bump TensorFlow sources to 2.17
+- Use the MediaTek-provided `libdram.h` in TF-A to pass the detected RAM size to U-Boot
+
 # [2.3.0]
 
 ## Added
