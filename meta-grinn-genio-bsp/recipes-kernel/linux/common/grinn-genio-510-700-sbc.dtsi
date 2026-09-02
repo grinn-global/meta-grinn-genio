@@ -200,21 +200,21 @@
 &pio {
 	gpio-line-names =
 			  /* 0 - 4 */
-			  "GPIO0", "GPIO1", "", "", "GPIO4",
+			  "40PIN_GPIO17", "40PIN_GPIO5", "", "", "40PIN_GPIO4",
 			  /* 5 - 9 */
-			  "", "GPIO6", "", "", "GPIO9",
+			  "", "40PIN_GPIO7", "", "", "40PIN_GPIO16",
 			  /* 10 - 14 */
-			  "GPIO10", "GPIO11", "", "", "",
+			  "40PIN_GPIO26", "40PIN_GPIO27", "", "", "",
 			  /* 15 - 19 */
 			  "", "", "", "", "",
 			  /* 20 - 24 */
-			  "", "GPIO21", "", "GPIO23_PWM2", "",
+			  "", "40PIN_GPIO6", "", "40PIN_GPIO12", "",
 			  /* 25 - 29 */
 			  "", "", "", "", "",
 			  /* 30 - 34 */
-			  "GPIO30_PWM1", "", "", "", "",
+			  "40PIN_GPIO13", "", "", "", "",
 			  /* 35 - 39 */
-			  "GPIO35_UART2_TXD", "GPIO36_UART2_RXD", "", "", "",
+			  "40PIN_GPIO14", "40PIN_GPIO15", "", "", "",
 			  /* 40 - 44 */
 			  "", "", "", "", "",
 			  /* 45 - 49 */
@@ -222,17 +222,17 @@
 			  /* 50 - 54 */
 			  "", "", "", "", "",
 			  /* 55 - 59 */
-			  "GPIO55_I2C0_SCL", "GPIO56_I2C0_SDA", "", "", "GPIO59_I2C2_SCL",
+			  "40PIN_GPIO3", "40PIN_GPIO2", "", "", "40PIN_GPIO1",
 			  /* 60 - 64 */
-			  "GPIO60_I2C2_SDA", "", "", "", "",
+			  "40PIN_GPIO0", "", "", "", "",
 			  /* 65 - 69 */
-			  "", "", "", "", "GPIO69",
+			  "", "", "", "", "40PIN_GPIO24",
 			  /* 70 - 74 */
-			  "", "", "GPIO72", "GPIO73", "GPIO74",
+			  "", "", "40PIN_GPIO23", "40PIN_GPIO25", "40PIN_GPIO22",
 			  /* 75 - 79 */
-			  "", "", "", "", "GPIO79_SPI2_CSn",
+			  "", "", "", "", "40PIN_GPIO8",
 			  /* 80 - 84 */
-			  "GPIO80_SPI2_CLK", "GPIO81_SPI2_MOSI", "GPIO82_SPI2_MISO", "", "",
+			  "40PIN_GPIO11", "40PIN_GPIO10", "40PIN_GPIO9", "", "",
 			  /* 85 - 89 */
 			  "", "", "", "", "",
 			  /* 90 - 94 */
@@ -248,7 +248,7 @@
 			  /* 115 - 119 */
 			  "", "", "", "", "",
 			  /* 120 - 124 */
-			  "", "GPIO121_PCM_CLK", "GPIO122_PCM_SYNC", "GPIO123_PCM_DO", "GPIO124_PCM_DI";
+			  "", "40PIN_GPIO18", "40PIN_GPIO19", "40PIN_GPIO21", "40PIN_GPIO20";
 
 	audio_default_pins: audio-default-pins {
 		pins-cmd-dat {
