@@ -198,6 +198,9 @@
 };
 
 &pio {
+	pinctrl-names = "default";
+	pinctrl-0 = <&header_gpio_pins>;
+
 	gpio-line-names =
 			  /* 0 - 4 */
 			  "40PIN_GPIO17", "40PIN_GPIO5", "", "", "40PIN_GPIO4",
@@ -249,6 +252,23 @@
 			  "", "", "", "", "",
 			  /* 120 - 124 */
 			  "", "40PIN_GPIO18", "40PIN_GPIO19", "40PIN_GPIO21", "40PIN_GPIO20";
+
+	header_gpio_pins: header-gpio-pins {
+		pins {
+			pinmux = <PINMUX_GPIO0__FUNC_B_GPIO0>,
+				 <PINMUX_GPIO1__FUNC_B_GPIO1>,
+				 <PINMUX_GPIO4__FUNC_B_GPIO4>,
+				 <PINMUX_GPIO6__FUNC_B_GPIO6>,
+				 <PINMUX_GPIO9__FUNC_B_GPIO9>,
+				 <PINMUX_GPIO10__FUNC_B_GPIO10>,
+				 <PINMUX_GPIO11__FUNC_B_GPIO11>,
+				 <PINMUX_GPIO21__FUNC_B_GPIO21>,
+				 <PINMUX_GPIO69__FUNC_B_GPIO69>,
+				 <PINMUX_GPIO72__FUNC_B_GPIO72>,
+				 <PINMUX_GPIO73__FUNC_B_GPIO73>,
+				 <PINMUX_GPIO74__FUNC_B_GPIO74>;
+		};
+	};
 
 	audio_default_pins: audio-default-pins {
 		pins-cmd-dat {
