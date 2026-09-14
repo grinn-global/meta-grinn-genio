@@ -1,4 +1,9 @@
+FILESEXTRAPATHS:prepend:grinn-genio-360-360p-sbc := "${THISDIR}/grinn-genio-360-360p-sbc:"
 FILESEXTRAPATHS:prepend:grinn-genio-510-700-sbc := "${THISDIR}/grinn-genio-510-700-sbc:"
+
+SRC_URI:append:grinn-genio-360-360p-sbc = " \
+        file://display-dp.dts \
+"
 
 SRC_URI:append:grinn-genio-510-700-sbc = " \
         file://audio-sof.dts \
