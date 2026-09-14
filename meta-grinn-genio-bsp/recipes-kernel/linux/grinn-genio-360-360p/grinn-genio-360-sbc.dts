@@ -1,0 +1,14 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+/*
+ * Copyright (C) 2025 MediaTek Inc.
+ * Copyright (C) 2026 Grinn sp. z o.o.
+ */
+
+/dts-v1/;
+#include "mt8366.dtsi"
+#include "grinn-genio-360-360p-sbc.dtsi"
+
+/ {
+	model = "Grinn GenioSBC-360";
+	compatible = "grinn,genio-360-sbc", "mediatek,mt8366", "mediatek,mt8171";
+};

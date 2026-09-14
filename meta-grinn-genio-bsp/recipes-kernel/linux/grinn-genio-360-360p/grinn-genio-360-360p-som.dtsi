@@ -1,0 +1,363 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+/*
+ * Copyright (C) 2025 MediaTek Inc.
+ * Copyright (C) 2026 Grinn sp. z o.o.
+ */
+
+#include "mt6366.dtsi"
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/pinctrl/mt8171-pinfunc.h>
+
+/ {
+	firmware {
+		optee {
+			compatible = "linaro,optee-tz";
+			method = "smc";
+		};
+
+		scmi: scmi {
+			compatible = "arm,scmi";
+			mboxes = <&tinysys_mbox 0>, <&tinysys_mbox 1>;
+			shmem = <&scmi_tx_shmem>, <&scmi_rx_shmem>;
+			mbox-names = "tx", "rx";
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			scmi_tinysys: protocol@80 {
+				reg = <0x80>;
+				scmi-mminfra = <5>;
+				scmi-plt = <7>;
+			};
+		};
+	};
+
+	memory@40000000 {
+		/* 4GB */
+		device_type = "memory";
+		reg = <0 0x40000000 0x1 0x00000000>;
+	};
+
+	reserved-memory {
+		#address-cells = <2>;
+		#size-cells = <2>;
+		ranges;
+
+		/*
+		 * 12 MiB reserved for OP-TEE (BL32)
+		 * +-----------------------+ 0x43e0_0000
+		 * |      SHMEM 2MiB       |
+		 * +-----------------------+ 0x43c0_0000
+		 * |        | TA_RAM  8MiB |
+		 * + TZDRAM +--------------+ 0x4340_0000
+		 * |        | TEE_RAM 2MiB |
+		 * +-----------------------+ 0x4320_0000
+		 */
+		optee_reserved: optee@43200000 {
+			no-map;
+			reg = <0 0x43200000 0 0x00c00000>;
+		};
+
+		/* 2 MiB reserved for ARM Trusted Firmware (BL31) */
+		bl31_secmon_reserved: secmon@54600000 {
+			no-map;
+			reg = <0 0x54600000 0x0 0x200000>;
+		};
+
+		apu_mem: memory@55000000 {
+			compatible = "shared-dma-pool";
+			reg = <0 0x55000000 0 0x1400000>; /* 20 MB */
+		};
+
+		sspm_resv_mem: sspm-reserved-memory@5b000000 {
+			compatible = "shared-dma-pool";
+			reg = <0 0x5b000000 0 0x200000>; /* 2 MB */
+			no-map;
+		};
+	};
+};
+
+&mmc0 {
+	pinctrl-names = "default", "state_uhs", "sleep";
+	pinctrl-0 = <&mmc0_pins_default>;
+	pinctrl-1 = <&mmc0_pins_uhs>;
+	pinctrl-2 = <&mmc0_sleep>;
+	bus-width = <8>;
+	max-frequency = <200000000>;
+	cap-mmc-highspeed;
+	mmc-hs200-1_8v;
+	mmc-hs400-1_8v;
+	mmc-hs400-enhanced-strobe;
+	supports-cqe;
+	hs400-ds-delay = <0x10100>;
+	cap-mmc-hw-reset;
+	vmmc-supply = <&mt6358_vemc_reg>;
+	vqmmc-supply = <&mt6358_vio18_reg>;
+	no-sdio;
+	no-sd;
+	non-removable;
+	status = "okay";
+};
+
+&pio {
+	mmc0_pins_default: mmc0-default-pins {
+		pins-cmd-dat {
+			pinmux = <PINMUX_GPIO124__FUNC_MSDC0_CMD>,
+				 <PINMUX_GPIO126__FUNC_MSDC0_DAT0>,
+				 <PINMUX_GPIO127__FUNC_MSDC0_DAT1>,
+				 <PINMUX_GPIO128__FUNC_MSDC0_DAT2>,
+				 <PINMUX_GPIO129__FUNC_MSDC0_DAT3>,
+				 <PINMUX_GPIO130__FUNC_MSDC0_DAT4>,
+				 <PINMUX_GPIO131__FUNC_MSDC0_DAT5>,
+				 <PINMUX_GPIO132__FUNC_MSDC0_DAT6>,
+				 <PINMUX_GPIO133__FUNC_MSDC0_DAT7>;
+			input-enable;
+			drive-strength = <MTK_DRIVE_4mA>;
+			bias-pull-up = <MTK_PUPD_SET_R1R0_01>;
+		};
+
+		pins-clk {
+			pinmux = <PINMUX_GPIO123__FUNC_MSDC0_CLK>;
+			bias-pull-down = <MTK_PUPD_SET_R1R0_10>;
+			drive-strength = <MTK_DRIVE_4mA>;
+		};
+
+		pins-rst {
+			pinmux = <PINMUX_GPIO125__FUNC_MSDC0_RSTB>;
+			bias-pull-up = <MTK_PUPD_SET_R1R0_01>;
+		};
+	};
+
+	mmc0_pins_uhs: mmc0-uhs-pins {
+		pins-cmd-dat {
+			pinmux = <PINMUX_GPIO124__FUNC_MSDC0_CMD>,
+				 <PINMUX_GPIO126__FUNC_MSDC0_DAT0>,
+				 <PINMUX_GPIO127__FUNC_MSDC0_DAT1>,
+				 <PINMUX_GPIO128__FUNC_MSDC0_DAT2>,
+				 <PINMUX_GPIO129__FUNC_MSDC0_DAT3>,
+				 <PINMUX_GPIO130__FUNC_MSDC0_DAT4>,
+				 <PINMUX_GPIO131__FUNC_MSDC0_DAT5>,
+				 <PINMUX_GPIO132__FUNC_MSDC0_DAT6>,
+				 <PINMUX_GPIO133__FUNC_MSDC0_DAT7>;
+			input-enable;
+			drive-strength = <MTK_DRIVE_8mA>;
+			bias-pull-up = <MTK_PUPD_SET_R1R0_01>;
+		};
+
+		pins-clk {
+			pinmux = <PINMUX_GPIO123__FUNC_MSDC0_CLK>;
+			bias-pull-down = <MTK_PUPD_SET_R1R0_10>;
+			drive-strength = <MTK_DRIVE_8mA>;
+		};
+
+		pins-rst {
+			pinmux = <PINMUX_GPIO125__FUNC_MSDC0_RSTB>;
+			bias-pull-up = <MTK_PUPD_SET_R1R0_01>;
+		};
+
+		pins-ds {
+			pinmux = <PINMUX_GPIO122__FUNC_MSDC0_DSL>;
+			drive-strength = <MTK_DRIVE_8mA>;
+			bias-pull-down = <MTK_PUPD_SET_R1R0_10>;
+		};
+	};
+
+	/* Set eMMC pins to floating to save power */
+	mmc0_sleep: mmc0-sleep-pins {
+		pins-cmd-dat {
+			pinmux = <PINMUX_GPIO124__FUNC_MSDC0_CMD>,
+				 <PINMUX_GPIO126__FUNC_MSDC0_DAT0>,
+				 <PINMUX_GPIO127__FUNC_MSDC0_DAT1>,
+				 <PINMUX_GPIO128__FUNC_MSDC0_DAT2>,
+				 <PINMUX_GPIO129__FUNC_MSDC0_DAT3>,
+				 <PINMUX_GPIO130__FUNC_MSDC0_DAT4>,
+				 <PINMUX_GPIO131__FUNC_MSDC0_DAT5>,
+				 <PINMUX_GPIO132__FUNC_MSDC0_DAT6>,
+				 <PINMUX_GPIO133__FUNC_MSDC0_DAT7>;
+			bias-disable;
+		};
+
+		pins-clk {
+			pinmux = <PINMUX_GPIO123__FUNC_MSDC0_CLK>;
+			bias-disable;
+		};
+
+		pins-rst {
+			pinmux = <PINMUX_GPIO125__FUNC_MSDC0_RSTB>;
+			bias-disable;
+		};
+
+		pins-ds {
+			pinmux = <PINMUX_GPIO122__FUNC_MSDC0_DSL>;
+			bias-disable;
+		};
+	};
+};
+
+&pmic {
+	interrupts-extended = <&pio 186 IRQ_TYPE_LEVEL_HIGH>;
+};
+
+&mt6358_vdram1_reg {
+	regulator-always-on;
+};
+
+&mt6358_vdram2_reg {
+	regulator-always-on;
+};
+
+&mt6358_vgpu_reg {
+	/* Repurpose this for NPU to avoid mislabeling */
+	regulator-name = "vnpu";
+	regulator-always-on;
+};
+
+&mt6358_vsram_gpu_reg {
+	/* Repurpose for NPU LDO/SRAM supply to match hardware routing */
+	regulator-name = "vnpu_vldo";
+	regulator-always-on;
+};
+
+&mt6358_vsram_others_reg {
+	/delete-property/ regulator-always-on;
+	/* The name "sram" is required by mtk-regulator-coupler */
+	regulator-name = "sram";
+	regulator-coupled-with = <&mt6358_vmodem_reg>;
+	regulator-coupled-max-spread = <6250>;
+};
+
+&mt6358_vmodem_reg {
+	/delete-property/ regulator-always-on;
+	/* The name "vgpu" is required by mtk-regulator-coupler */
+	regulator-name = "vgpu";
+	regulator-coupled-with = <&mt6358_vsram_others_reg>;
+	regulator-coupled-max-spread = <6250>;
+};
+
+&gpu {
+	mali-supply = <&mt6358_vmodem_reg>;
+};
+
+&mfg0 {
+	domain-supply = <&mt6358_vmodem_reg>;
+};
+
+&mfg1 {
+	domain-supply = <&mt6358_vsram_others_reg>;
+};
+
+&afe {
+	status = "okay";
+
+	pinctrl-names = "aud-clk-mosi-off",
+			"aud-clk-mosi-on",
+			"aud-sync-mosi-off",
+			"aud-sync-mosi-on",
+			"aud-dat-mosi0-off",
+			"aud-dat-mosi0-on",
+			"aud-dat-mosi1-off",
+			"aud-dat-mosi1-on",
+			"aud-dat-miso0-off",
+			"aud-dat-miso0-on",
+			"aud-dat-miso1-off",
+			"aud-dat-miso1-on";
+	pinctrl-0 = <&aud_clk_mosi_off>;
+	pinctrl-1 = <&aud_clk_mosi_on>;
+	pinctrl-2 = <&aud_sync_mosi_off>;
+	pinctrl-3 = <&aud_sync_mosi_on>;
+	pinctrl-4 = <&aud_dat_mosi0_off>;
+	pinctrl-5 = <&aud_dat_mosi0_on>;
+	pinctrl-6 = <&aud_dat_mosi1_off>;
+	pinctrl-7 = <&aud_dat_mosi1_on>;
+	pinctrl-8 = <&aud_dat_miso0_off>;
+	pinctrl-9 = <&aud_dat_miso0_on>;
+	pinctrl-10 = <&aud_dat_miso1_off>;
+	pinctrl-11 = <&aud_dat_miso1_on>;
+};
+
+&pio {
+	aud_clk_mosi_off: aud-clk-mosi-off {
+		pins-cmd1-dat {
+			pinmux = <PINMUX_GPIO155__FUNC_GPIO155>;
+			input-enable;
+			bias-pull-down;
+		};
+	};
+	aud_clk_mosi_on: aud-clk-mosi-on {
+		pins-cmd1-dat {
+			pinmux = <PINMUX_GPIO155__FUNC_AUD_CLK_MOSI>;
+			input-schmitt-enable;
+			bias-disable;
+		};
+	};
+	aud_sync_mosi_off: aud-sync-mosi-off {
+		pins-cmd1-dat {
+			pinmux = <PINMUX_GPIO156__FUNC_GPIO156>;
+			input-enable;
+			bias-pull-down;
+		};
+	};
+	aud_sync_mosi_on: aud-sync-mosi-on {
+		pins-cmd1-dat {
+			pinmux = <PINMUX_GPIO156__FUNC_AUD_SYNC_MOSI>;
+			input-schmitt-enable;
+			bias-disable;
+		};
+	};
+	aud_dat_mosi0_off: aud-dat-mosi0-off {
+		pins-cmd1-dat {
+			pinmux = <PINMUX_GPIO157__FUNC_GPIO157>;
+			input-enable;
+			bias-pull-down;
+		};
+	};
+	aud_dat_mosi0_on: aud-dat-mosi0-on {
+		pins-cmd1-dat {
+			pinmux = <PINMUX_GPIO157__FUNC_AUD_DAT_MOSI0>;
+			input-schmitt-enable;
+			bias-disable;
+		};
+	};
+	aud_dat_mosi1_off: aud-dat-mosi1-off {
+		pins-cmd1-dat {
+			pinmux = <PINMUX_GPIO158__FUNC_GPIO158>;
+			input-enable;
+			bias-pull-down;
+		};
+	};
+	aud_dat_mosi1_on: aud-dat-mosi1-on {
+		pins-cmd1-dat {
+			pinmux = <PINMUX_GPIO158__FUNC_AUD_DAT_MOSI1>;
+			input-schmitt-enable;
+			bias-disable;
+		};
+	};
+	aud_dat_miso0_off: aud-dat-miso0-off {
+		pins-cmd1-dat {
+			pinmux = <PINMUX_GPIO161__FUNC_GPIO161>;
+			input-enable;
+			bias-pull-down;
+		};
+	};
+	aud_dat_miso0_on: aud-dat-miso0-on {
+		pins-cmd1-dat {
+			pinmux = <PINMUX_GPIO161__FUNC_AUD_DAT_MISO0>;
+			input-schmitt-enable;
+			bias-disable;
+		};
+	};
+	aud_dat_miso1_off: aud-dat-miso1-off {
+		pins-cmd1-dat {
+			pinmux = <PINMUX_GPIO162__FUNC_GPIO162>;
+			input-enable;
+			bias-disable;
+		};
+	};
+	aud_dat_miso1_on: aud-dat-miso1-on {
+		pins-cmd1-dat {
+			pinmux = <PINMUX_GPIO162__FUNC_AUD_DAT_MISO1>;
+			input-schmitt-enable;
+			bias-disable;
+		};
+	};
+};
