@@ -1,0 +1,29 @@
+From 13462afd529b5046673430b435686e8eb19597d3 Mon Sep 17 00:00:00 2001
+From: Bartosz Bilas <b.bilas@grinn-global.com>
+Date: Tue, 20 Jan 2026 10:00:00 +0000
+Subject: [PATCH] phy: increase default phy autoneg timeout
+
+The default PHY_ANEG_TIMEOUT value of 4000 ms is too short for some PHYs
+(e.g. Micrel KSZ9031) to reliably complete auto-negotiation,
+which may lead to occasional auto-negotiation timeout errors.
+---
+ include/phy.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/include/phy.h b/include/phy.h
+index ad2096ca..b3523ec6 100644
+--- a/include/phy.h
++++ b/include/phy.h
+@@ -62,7 +62,8 @@ struct udevice;
+ 				SUPPORTED_10000baseT_Full)
+ 
+ #ifndef PHY_ANEG_TIMEOUT
+-#define PHY_ANEG_TIMEOUT	4000
++/* Increased for slow PHYs */
++#define PHY_ANEG_TIMEOUT	8000
+ #endif
+ 
+ 
+-- 
+2.39.5
+

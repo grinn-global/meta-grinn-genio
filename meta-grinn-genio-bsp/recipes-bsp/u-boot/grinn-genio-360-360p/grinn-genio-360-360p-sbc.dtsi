@@ -1,0 +1,235 @@
+// SPDX-License-Identifier: GPL-2.0 OR MIT
+/*
+ * Copyright (C) 2025 MediaTek Inc.
+ * Copyright (C) 2026 Grinn sp. z o.o.
+ */
+
+/ {
+	chosen {
+		stdout-path = &uart0;
+	};
+};
+
+&uart0 {
+	status = "okay";
+};
+
+&i2c0 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c0_pins>;
+	clock-frequency = <400000>;
+	status = "okay";
+};
+
+&i2c3 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c3_pins>;
+	clock-frequency = <400000>;
+	status = "okay";
+};
+
+&i2c5 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c5_pins>;
+	clock-frequency = <400000>;
+	status = "okay";
+};
+
+&i2c6 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c6_pins>;
+	clock-frequency = <400000>;
+	status = "okay";
+};
+
+&i2c7 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c7_pins>;
+	clock-frequency = <400000>;
+	status = "okay";
+};
+
+&i2c8 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c8_pins>;
+	clock-frequency = <400000>;
+	status = "okay";
+};
+
+&pio {
+	i2c0_pins: i2c0-default {
+		pins-bus {
+			pinmux = <PINMUX_GPIO98__FUNC_SCL0>,
+				 <PINMUX_GPIO99__FUNC_SDA0>;
+			bias-pull-up = <MTK_PULL_SET_RSEL_111>;
+		};
+	};
+
+	i2c3_pins: i2c3-default {
+		pins-bus {
+			pinmux = <PINMUX_GPIO104__FUNC_SCL3>,
+				 <PINMUX_GPIO105__FUNC_SDA3>;
+			bias-pull-up = <MTK_PULL_SET_RSEL_111>;
+		};
+	};
+
+	i2c5_pins: i2c5-default {
+		pins-bus {
+			pinmux = <PINMUX_GPIO108__FUNC_SCL5>,
+				 <PINMUX_GPIO109__FUNC_SDA5>;
+			bias-pull-up = <MTK_PULL_SET_RSEL_111>;
+		};
+	};
+
+	i2c6_pins: i2c6-default {
+		pins-bus {
+			pinmux = <PINMUX_GPIO110__FUNC_SCL6>,
+				 <PINMUX_GPIO111__FUNC_SDA6>;
+			bias-pull-up = <MTK_PULL_SET_RSEL_111>;
+		};
+	};
+
+	i2c7_pins: i2c7-default {
+		pins-bus {
+			pinmux = <PINMUX_GPIO112__FUNC_SCL7>,
+				 <PINMUX_GPIO113__FUNC_SDA7>;
+			bias-pull-up = <MTK_PULL_SET_RSEL_111>;
+		};
+	};
+
+	i2c8_pins: i2c8-default {
+		pins-bus {
+			pinmux = <PINMUX_GPIO114__FUNC_SCL8>,
+				 <PINMUX_GPIO115__FUNC_SDA8>;
+			bias-pull-up = <MTK_PULL_SET_RSEL_111>;
+		};
+	};
+
+	usb0_default_pins: usb0-default-pins {
+		pins-vbus-valid {
+			pinmux = <PINMUX_GPIO54__FUNC_VBUSVALID>;
+		};
+	};
+
+	eth_default: eth-default {
+		txd-pins {
+			pinmux = <PINMUX_GPIO12__FUNC_GBE_TXD3>,
+				 <PINMUX_GPIO13__FUNC_GBE_TXD2>,
+				 <PINMUX_GPIO14__FUNC_GBE_TXD1>,
+				 <PINMUX_GPIO15__FUNC_GBE_TXD0>;
+			drive-strength = <MTK_DRIVE_8mA>;
+		};
+
+		cc-pins {
+			pinmux = <PINMUX_GPIO20__FUNC_GBE_TXC>,
+				 <PINMUX_GPIO23__FUNC_GBE_TXEN>,
+				 <PINMUX_GPIO22__FUNC_GBE_RXDV>,
+				 <PINMUX_GPIO21__FUNC_GBE_RXC>;
+			drive-strength = <MTK_DRIVE_8mA>;
+		};
+
+		rxd-pins {
+			pinmux = <PINMUX_GPIO16__FUNC_GBE_RXD3>,
+				 <PINMUX_GPIO17__FUNC_GBE_RXD2>,
+				 <PINMUX_GPIO18__FUNC_GBE_RXD1>,
+				 <PINMUX_GPIO19__FUNC_GBE_RXD0>;
+			drive-strength = <MTK_DRIVE_8mA>;
+		};
+
+		mdio-pins {
+			pinmux = <PINMUX_GPIO24__FUNC_GBE_MDC>,
+				 <PINMUX_GPIO25__FUNC_GBE_MDIO>;
+			drive-strength = <MTK_DRIVE_8mA>;
+			input-enable;
+		};
+	};
+
+	eth_sleep: eth-sleep {
+		txd-pins {
+			pinmux = <PINMUX_GPIO12__FUNC_GPIO12>,
+				 <PINMUX_GPIO13__FUNC_GPIO13>,
+				 <PINMUX_GPIO14__FUNC_GPIO14>,
+				 <PINMUX_GPIO15__FUNC_GPIO15>;
+		};
+
+		cc-pins {
+			pinmux = <PINMUX_GPIO20__FUNC_GPIO20>,
+				 <PINMUX_GPIO23__FUNC_GPIO23>,
+				 <PINMUX_GPIO22__FUNC_GPIO22>,
+				 <PINMUX_GPIO21__FUNC_GPIO21>;
+		};
+
+		rxd-pins {
+			pinmux = <PINMUX_GPIO16__FUNC_GPIO16>,
+				 <PINMUX_GPIO17__FUNC_GPIO17>,
+				 <PINMUX_GPIO18__FUNC_GPIO18>,
+				 <PINMUX_GPIO19__FUNC_GPIO19>;
+		};
+
+		mdio-pins {
+			pinmux = <PINMUX_GPIO24__FUNC_GPIO24>,
+				 <PINMUX_GPIO25__FUNC_GPIO25>;
+			input-disable;
+			bias-disable;
+		};
+	};
+};
+
+&eth {
+	phy-mode = "rgmii-id";
+	phy-handle = <&ethernet_phy0>;
+	snps,reset-active-low;
+	snps,reset-delays-us = <0 11000 200000>;
+	snps,reset-gpio = <&pio 28 GPIO_ACTIVE_LOW>;
+	pinctrl-names = "default", "sleep";
+	pinctrl-0 = <&eth_default>;
+	pinctrl-1 = <&eth_sleep>;
+	status = "okay";
+
+	mdio {
+		compatible = "snps,dwmac-mdio";
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		ethernet_phy0: ethernet-phy@3 {
+			compatible = "ethernet-phy-ieee802.3-c22";
+			reg = <3>;
+		};
+	};
+};
+
+&usb {
+	status = "okay";
+};
+
+&ssusb {
+	pinctrl-names = "default";
+	pinctrl-0 = <&usb0_default_pins>;
+	maximum-speed = "high-speed";
+	dr_mode = "peripheral";
+	status = "okay";
+};
+
+&u3phy0 {
+	status = "okay";
+};
+
+&xhci1 {
+	status = "okay";
+};
+
+&u2phy1 {
+	status = "okay";
+};
+
+&xhci2 {
+	status = "okay";
+};
+
+&u2phy2 {
+	status = "okay";
+};
+
+&watchdog {
+	status = "okay";
+};
