@@ -46,6 +46,13 @@ stages:
 .ci_matrix: &ci_matrix
   parallel:
     matrix:
+      - KAS_MACHINE: grinn-genio-360-360p-sbc
+        KAS_CONFIG:
+          - default
+          - default:nda
+          - default:nda:deepx
+          - default:nda:deepx:demo
+
       - KAS_MACHINE: grinn-genio-510-sbc
         KAS_CONFIG:
           - default
