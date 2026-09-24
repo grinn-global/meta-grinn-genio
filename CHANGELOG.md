@@ -1,3 +1,9 @@
+# [3.1.0]
+
+## Changed
+- Rename 40-pin header GPIO names to the BCM-aligned `40PIN_GPIOx` format
+- Assign GPIO functions to remaining pins in the 40-pin header
+
 # [3.0.0]
 
 ## Removed
