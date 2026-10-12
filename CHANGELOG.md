@@ -1,3 +1,14 @@
+# [3.2.0]
+
+## Added
+- Support for `grinn-genio-360-360p-sbc`, covering both MT8366 and MT8367 SOM variants
+
+## Changed
+- Switch to the official `meta-deepx-m1`: dx-rt v3.4.1, dx-driver v2.6.0, dx-stream v3.1.1
+
+## Fixed
+- Boot over network
+
 # [3.1.0]
 
 ## Changed
