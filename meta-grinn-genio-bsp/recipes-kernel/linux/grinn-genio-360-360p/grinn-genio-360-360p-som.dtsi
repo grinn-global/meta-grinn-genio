@@ -198,6 +198,22 @@
 	interrupts-extended = <&pio 186 IRQ_TYPE_LEVEL_HIGH>;
 };
 
+&mt6358_vmc_reg {
+	regulator-always-on;
+};
+
+&mt6358_vmch_reg {
+	regulator-always-on;
+};
+
+&mt6358_vibr_reg {
+	regulator-always-on;
+};
+
+&mt6358_vsim2_reg {
+	regulator-always-on;
+};
+
 &mt6358_vdram1_reg {
 	regulator-always-on;
 };
