@@ -5,6 +5,19 @@
  */
 
 / {
+	soc {
+		efuse: efuse@11fb0000 {
+			compatible = "mediatek,mt8366-efuse", "mediatek,efuse";
+			reg = <0 0x11fb0000 0 0x1000>;
+			#address-cells = <1>;
+			#size-cells = <1>;
+
+			efuse_mac_address: mac-address@514 {
+				reg = <0x514 0x6>;
+			};
+		};
+	};
+
 	memory@40000000 {
 		/* 4GB */
 		device_type = "memory";
@@ -80,4 +93,9 @@
 	vqmmc-supply = <&reg_1p8v>;
 	non-removable;
 	status = "okay";
+};
+
+&eth {
+	nvmem-cells = <&efuse_mac_address>;
+	nvmem-cell-names = "mac-address";
 };

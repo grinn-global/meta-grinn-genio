@@ -7,6 +7,20 @@
 #include "mt6359.dtsi"
 
 / {
+	soc {
+		efuse: efuse@11f20000 {
+			compatible = "mediatek,mt8188-efuse", "mediatek,efuse";
+			reg = <0 0x11f20000 0 0x1000>;
+			#address-cells = <1>;
+			#size-cells = <1>;
+
+			/* C_DAT1 + low half of C_DAT2, C_DAT0 is reserved for the MediaTek rollback index */
+			efuse_mac_address: mac-address@514 {
+				reg = <0x514 0x6>;
+			};
+		};
+	};
+
 	memory@40000000 {
 		/* 4GB */
 		device_type = "memory";
@@ -82,4 +96,9 @@
 			mediatek,drive-strength-adv = <7>;
 		};
 	};
+};
+
+&eth {
+	nvmem-cells = <&efuse_mac_address>;
+	nvmem-cell-names = "mac-address";
 };

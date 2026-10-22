@@ -1,7 +1,12 @@
 FILESEXTRAPATHS:prepend:grinn-genio-360-360p-sbc := "${THISDIR}/grinn-genio-360-360p:"
 FILESEXTRAPATHS:prepend:grinn-genio-510-700-sbc := "${THISDIR}/grinn-genio-510-700:"
+FILESEXTRAPATHS:prepend:grinn-genio-som := "${THISDIR}/grinn-genio-som:"
 DT_DIR = "git/arch/arm/dts"
 
+SRC_URI:append:grinn-genio-som = " \
+    file://0001-misc-add-MediaTek-eFuse-driver.patch \
+    file://efuse-mac.cfg \
+"
 SRC_URI:append:grinn-genio-360-360p-som = " \
     file://grinn-genio-360-360p-som.dtsi;subdir=${DT_DIR} \
 "
