@@ -13,6 +13,7 @@ SRC_URI:append:grinn-genio-360-360p-sbc = " \
     file://grinn-genio-360-sbc.dts;subdir=${DT_DIR} \
     file://grinn-genio-360p-sbc.dts;subdir=${DT_DIR} \
     file://0001-PCI-mediatek-gen3-allow-PERST-to-be-driven-from-a-GPIO.patch \
+    file://0002-usb-mtu3-add-property-to-keep-usb3-port-on-host.patch \
     file://eth.cfg \
     file://pcie-aspm.cfg \
 "

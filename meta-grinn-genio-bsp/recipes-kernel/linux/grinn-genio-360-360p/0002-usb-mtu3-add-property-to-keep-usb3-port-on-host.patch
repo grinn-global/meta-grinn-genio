@@ -1,0 +1,86 @@
+From a4e24ce005d3dc0d3f37392c789ed85b1f93acd3 Mon Sep 17 00:00:00 2001
+From: Michal Mironiski <michal.mironiski@grinn-global.com>
+Date: Tue, 6 Oct 2026 08:59:10 +0000
+Subject: [PATCH] usb: mtu3: add property to keep usb3 port on host
+
+On some boards the usb2 and usb3 lines of port0 are routed to different
+places: usb2 to a connector working as a device, usb3 to an on-board
+hub working as a host. Both roles should work at the same time.
+
+The dual-role switch always hands both lines of port0 to the device
+controller, which drops the xHCI SuperSpeed link even though the device
+never uses usb3 here.
+
+Add the mediatek,usb3-host-only property. When set, the device
+controller works on u2port0 only (limited to high-speed), and u3port0
+always stays with the host, as if it was disabled for the device.
+---
+ drivers/usb/mtu3/mtu3.h      | 3 +++
+ drivers/usb/mtu3/mtu3_core.c | 5 +++--
+ drivers/usb/mtu3/mtu3_plat.c | 6 ++++--
+ 3 files changed, 10 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/usb/mtu3/mtu3.h b/drivers/usb/mtu3/mtu3.h
+index 4ef04e6d97a2..cdd06c3709ed 100644
+--- a/drivers/usb/mtu3/mtu3.h
++++ b/drivers/usb/mtu3/mtu3.h
+@@ -236,6 +236,8 @@ struct otg_switch_mtk {
+  *		but when use dual-role mode, can't disable u2port0
+  * @u3p_dis_msk: mask of disabling usb3 ports, for example, bit0==1 to
+  *		disable u3port0, bit1==1 to disable u3port1,... etc
++ * @u3p0_host_only: u3port0 is used by the host only, the device uses
++ *		u2port0 alone, so dual-role switch leaves u3port0 to the host
+  * @dbgfs_root: only used when supports manual dual-role switch via debugfs
+  * @force_vbus: without Vbus PIN, SW need set force_vbus state for device
+  * @uwk_en: it's true when supports remote wakeup in host mode
+@@ -264,6 +266,7 @@ struct ssusb_mtk {
+ 	int u3_ports;
+ 	int u2p_dis_msk;
+ 	int u3p_dis_msk;
++	bool u3p0_host_only;
+ 	struct dentry *dbgfs_root;
+ 	bool force_vbus;
+ 	bool role_switch_reset;
+diff --git a/drivers/usb/mtu3/mtu3_core.c b/drivers/usb/mtu3/mtu3_core.c
+index 8ee29443f70e..fca79beb747f 100644
+--- a/drivers/usb/mtu3/mtu3_core.c
++++ b/drivers/usb/mtu3/mtu3_core.c
+@@ -824,8 +824,9 @@ static irqreturn_t mtu3_irq(int irq, void *data)
+ 
+ static void mtu3_check_params(struct mtu3 *mtu)
+ {
+-	/* device's u3 port (port0) is disabled */
+-	if (mtu->u3_capable && (mtu->ssusb->u3p_dis_msk & BIT(0)))
++	/* device's u3 port (port0) is disabled or used by the host only */
++	if (mtu->u3_capable && ((mtu->ssusb->u3p_dis_msk & BIT(0)) ||
++				mtu->ssusb->u3p0_host_only))
+ 		mtu->u3_capable = 0;
+ 
+ 	/* check the max_speed parameter */
+diff --git a/drivers/usb/mtu3/mtu3_plat.c b/drivers/usb/mtu3/mtu3_plat.c
+index 579d4e71a550..afe7f9996d83 100644
+--- a/drivers/usb/mtu3/mtu3_plat.c
++++ b/drivers/usb/mtu3/mtu3_plat.c
+@@ -221,8 +221,8 @@ static void ssusb_u3_drd_check(struct ssusb_mtk *ssusb)
+ 	u32 host_u3p_num;
+ 	u32 value;
+ 
+-	/* u3 port0 is disabled */
+-	if (ssusb->u3p_dis_msk & BIT(0)) {
++	/* u3 port0 is disabled or used by the host only */
++	if ((ssusb->u3p_dis_msk & BIT(0)) || ssusb->u3p0_host_only) {
+ 		otg_sx->is_u3_drd = false;
+ 		goto out;
+ 	}
+@@ -303,6 +303,8 @@ static int get_ssusb_rscs(struct platform_device *pdev, struct ssusb_mtk *ssusb)
+ 		ssusb->dr_mode = USB_DR_MODE_OTG;
+ 
+ 	of_property_read_u32(node, "mediatek,u3p-dis-msk", &ssusb->u3p_dis_msk);
++	ssusb->u3p0_host_only =
++		of_property_read_bool(node, "mediatek,usb3-host-only");
+ 
+ 	if (ssusb->dr_mode == USB_DR_MODE_PERIPHERAL)
+ 		goto out;
+-- 
+2.39.5
+

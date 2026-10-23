@@ -587,7 +587,10 @@
 &ssusb {
 	pinctrl-names = "default";
 	pinctrl-0 = <&usb0_default_pins>;
-	dr_mode = "host";
+	dr_mode = "otg";
+	role-switch-default-mode = "peripheral";
+	mediatek,usb3-host-only;
+	mediatek,force-vbus;
 	usb3-lpm-disable;
 	wakeup-source;
 	status = "okay";
