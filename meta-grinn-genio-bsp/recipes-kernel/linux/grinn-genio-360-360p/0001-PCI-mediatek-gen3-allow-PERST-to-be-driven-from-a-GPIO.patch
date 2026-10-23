@@ -1,0 +1,61 @@
+From c8f23492869ad0e4b37db602f1c0d06a4f28df6c Mon Sep 17 00:00:00 2001
+From: Michal Mironiski <michal.mironiski@grinn-global.com>
+Date: Tue, 15 Sep 2026 15:52:21 +0000
+Subject: [PATCH] PCI: mediatek-gen3: allow PERST to be driven from a GPIO
+
+---
+ drivers/pci/controller/pcie-mediatek-gen3.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/drivers/pci/controller/pcie-mediatek-gen3.c b/drivers/pci/controller/pcie-mediatek-gen3.c
+index 6bb200d9608f..c048f8085025 100644
+--- a/drivers/pci/controller/pcie-mediatek-gen3.c
++++ b/drivers/pci/controller/pcie-mediatek-gen3.c
+@@ -8,6 +8,7 @@
+ 
+ #include <linux/clk.h>
+ #include <linux/delay.h>
++#include <linux/gpio/consumer.h>
+ #include <linux/iopoll.h>
+ #include <linux/irq.h>
+ #include <linux/irqchip/chained_irq.h>
+@@ -154,6 +155,7 @@ struct mtk_gen3_pcie {
+ 	struct reset_control *mac_reset;
+ 	struct reset_control *phy_reset;
+ 	struct phy *phy;
++	struct gpio_desc *perst;
+ 	struct clk_bulk_data *clks;
+ 	int num_clks;
+ 	struct mtk_pcie_data *data;
+@@ -387,6 +389,8 @@ static int mtk_pcie_startup_port(struct mtk_gen3_pcie *pcie)
+ 	val = readl_relaxed(pcie->base + PCIE_RST_CTRL_REG);
+ 	val |= PCIE_MAC_RSTB | PCIE_PHY_RSTB | PCIE_BRG_RSTB | PCIE_PE_RSTB;
+ 	writel_relaxed(val, pcie->base + PCIE_RST_CTRL_REG);
++	/* Assert PERST# on boards that route it to a GPIO */
++	gpiod_set_value_cansleep(pcie->perst, 1);
+ 
+ 	/*
+ 	 * Described in PCIe CEM specification sections 2.2 (PERST# Signal)
+@@ -399,6 +403,7 @@ static int mtk_pcie_startup_port(struct mtk_gen3_pcie *pcie)
+ 	/* De-assert reset signals */
+ 	val &= ~(PCIE_MAC_RSTB | PCIE_PHY_RSTB | PCIE_BRG_RSTB | PCIE_PE_RSTB);
+ 	writel_relaxed(val, pcie->base + PCIE_RST_CTRL_REG);
++	gpiod_set_value_cansleep(pcie->perst, 0);
+ 
+ 	/* Check if the link is up or not */
+ 	err = readl_poll_timeout(pcie->base + PCIE_LINK_STATUS_REG, val,
+@@ -813,6 +818,11 @@ static int mtk_pcie_parse_port(struct mtk_gen3_pcie *pcie)
+ 
+ 	pcie->reg_base = regs->start;
+ 
++	pcie->perst = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_LOW);
++	if (IS_ERR(pcie->perst))
++		return dev_err_probe(dev, PTR_ERR(pcie->perst),
++				     "failed to get PERST# GPIO\n");
++
+ 	pcie->phy_reset = devm_reset_control_get_optional_exclusive(dev, "phy");
+ 	if (IS_ERR(pcie->phy_reset)) {
+ 		ret = PTR_ERR(pcie->phy_reset);
+-- 
+2.39.5
+

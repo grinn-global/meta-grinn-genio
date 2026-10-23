@@ -576,6 +576,7 @@
 };
 
 &pcie {
+	reset-gpios = <&pio 135 GPIO_ACTIVE_LOW>;
 	status = "okay";
 };
 
