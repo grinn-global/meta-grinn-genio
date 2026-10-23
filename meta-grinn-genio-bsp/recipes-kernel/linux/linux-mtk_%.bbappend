@@ -1,4 +1,4 @@
-FILESEXTRAPATHS:prepend := "${THISDIR}/common:${THISDIR}/${MACHINE}:"
+FILESEXTRAPATHS:prepend:grinn-genio-510-700-sbc := "${THISDIR}/grinn-genio-510-700:"
 DT_DIR = "git/arch/arm64/boot/dts/mediatek"
 
 SRC_URI:append:grinn-genio-510-700-som = " \ 
