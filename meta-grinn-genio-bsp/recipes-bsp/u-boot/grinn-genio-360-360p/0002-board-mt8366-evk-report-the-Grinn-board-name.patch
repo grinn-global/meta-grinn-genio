@@ -1,0 +1,40 @@
+From 3613362d9e95efda5cb2c798d6536333e8ae1871 Mon Sep 17 00:00:00 2001
+From: Michal Mironiski <michal.mironiski@grinn-global.com>
+Date: Fri, 9 Oct 2026 12:06:00 +0000
+Subject: [PATCH] board: mt8366-evk: report the Grinn board name
+
+Replace the hardcoded MediaTek EVK names with the Grinn ones.
+---
+ board/mediatek/genio-360-evk/mt8366_evk.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/board/mediatek/genio-360-evk/mt8366_evk.c b/board/mediatek/genio-360-evk/mt8366_evk.c
+index 49e2b48ea51..6161a818fce 100644
+--- a/board/mediatek/genio-360-evk/mt8366_evk.c
++++ b/board/mediatek/genio-360-evk/mt8366_evk.c
+@@ -258,16 +258,16 @@ int board_late_init(void)
+ 	part = mediatek_sip_part_name();
+ 	switch (part) {
+ 	case 0x8366:
+-		board_name = "genio-360-evk";
+-		board_full_name = "MediaTek Genio 360 EVK";
++		board_name = "grinn-genio-360-sbc";
++		board_full_name = "Grinn GenioSBC-360";
+ 		break;
+ 	case 0x8367:
+-		board_name = "genio-360p-evk";
+-		board_full_name = "MediaTek Genio 360P EVK";
++		board_name = "grinn-genio-360p-sbc";
++		board_full_name = "Grinn GenioSBC-360P";
+ 		break;
+ 	default:
+-		board_name = "genio-360-evk";
+-		board_full_name = "MediaTek Genio 360 EVK";
++		board_name = "grinn-genio-360-sbc";
++		board_full_name = "Grinn GenioSBC-360";
+ 		break;
+ 	}
+ 
+-- 
+2.39.5
+

@@ -20,6 +20,7 @@ SRC_URI:append:grinn-genio-platform = " \
 SRC_URI:append:grinn-genio-360-360p-sbc = " \
     file://grinn-genio-360-360p-sbc.dtsi;subdir=${DT_DIR} \
     file://0001-phy-increase-default-phy-autoneg-timeout.patch \
+    file://0002-board-mt8366-evk-report-the-Grinn-board-name.patch \
     file://random_ethaddr.cfg \
 "
 SRC_URI:append:grinn-genio-510-700-sbc = " \
