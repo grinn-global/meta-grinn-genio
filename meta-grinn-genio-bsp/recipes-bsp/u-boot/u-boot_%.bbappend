@@ -1,4 +1,4 @@
-FILESEXTRAPATHS:prepend := "${THISDIR}/common:${THISDIR}/${MACHINE}:"
+FILESEXTRAPATHS:prepend:grinn-genio-510-700-sbc := "${THISDIR}/grinn-genio-510-700:"
 DT_DIR = "git/arch/arm/dts"
 
 SRC_URI:append:grinn-genio-510-700-som = " \
@@ -11,7 +11,7 @@ SRC_URI:append:grinn-genio-510-700-som = " \
 "
 SRC_URI:append:grinn-genio-platform = " \
     file://${MACHINE}.dts;subdir=${DT_DIR} \
-    file://devicetrees.cfg \
+    file://devicetrees-${MACHINE}.cfg \
 "
 SRC_URI:append:grinn-genio-510-700-sbc = " \
     file://grinn-genio-510-700-sbc.dtsi;subdir=${DT_DIR} \
