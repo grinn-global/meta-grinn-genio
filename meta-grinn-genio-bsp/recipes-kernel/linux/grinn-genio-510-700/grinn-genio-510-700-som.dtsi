@@ -20,6 +20,11 @@
 		};
 	};
 
+	fsource {
+		compatible = "regulator-output";
+		vout-supply = <&mt6359_vefuse_ldo_reg>;
+	};
+
 	reserved-memory {
 		#address-cells = <2>;
 		#size-cells = <2>;

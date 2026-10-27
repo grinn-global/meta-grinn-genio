@@ -10,6 +10,11 @@
 #include <dt-bindings/pinctrl/mt8171-pinfunc.h>
 
 / {
+	fsource {
+		compatible = "regulator-output";
+		vout-supply = <&mt6358_vefuse_reg>;
+	};
+
 	firmware {
 		optee {
 			compatible = "linaro,optee-tz";
