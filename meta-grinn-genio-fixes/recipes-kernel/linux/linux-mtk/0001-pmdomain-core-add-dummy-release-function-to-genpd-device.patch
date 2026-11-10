@@ -1,0 +1,59 @@
+From 280730fdbc9f4047028a0dab5711dbd9cca01b03 Mon Sep 17 00:00:00 2001
+From: "irving.ch.lin" <irving-ch.lin@mediatek.com>
+Date: Mon, 24 Aug 2026 18:04:39 +0800
+Subject: [PATCH] BACKPORT: pmdomain: core: add dummy release function to genpd
+ device
+
+The genpd device, which is really only used as a handle to lookup
+OPP, but not even registered to the device core otherwise and thus
+lifetime linked to the genpd struct it is contained in, is missing
+a release function. After b8f7bbd1f4ec ("pmdomain: core: Add
+missing put_device()") the device will be cleaned up going through
+the driver core device_release() function, which will warn when no
+release callback is present for the device. Add a dummy release
+function to shut up the warning.
+
+Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Fixes: b8f7bbd1f4ec ("pmdomain: core: Add missing put_device()")
+Cc: stable@vger.kernel.org
+Message-ID: <20241218184433.1930532-1-l.stach@pengutronix.de>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+
+(cherry picked from commit f64f610ec6ab59dd0391b03842cea3a4cd8ee34f)
+
+CR-Id: AUTO00866925
+Change-Id: I82b003aa9f12875a956dc2b2ece7c79d4f0cfbb3
+Signed-off-by: irving.ch.lin <irving-ch.lin@mediatek.com>
+---
+ drivers/base/power/domain.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+index 5bee0a897500..6569bbf06c78 100644
+--- a/drivers/base/power/domain.c
++++ b/drivers/base/power/domain.c
+@@ -1980,6 +1980,11 @@ static int genpd_set_default_power_state(struct generic_pm_domain *genpd)
+ 	return 0;
+ }
+ 
++static void genpd_provider_release(struct device *dev)
++{
++	/* nothing to be done here */
++}
++
+ static int genpd_alloc_data(struct generic_pm_domain *genpd)
+ {
+ 	struct genpd_governor_data *gd = NULL;
+@@ -2106,6 +2111,7 @@ int pm_genpd_init(struct generic_pm_domain *genpd,
+ 		return ret;
+ 
+ 	device_initialize(&genpd->dev);
++	genpd->dev.release = genpd_provider_release;
+ 	dev_set_name(&genpd->dev, "%s", genpd->name);
+ 
+ 	mutex_lock(&gpd_list_lock);
+-- 
+2.39.5
+
