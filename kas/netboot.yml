@@ -7,5 +7,5 @@ header:
 repos:
   meta-grinn-common-netboot:
     url: https://github.com/grinn-global/meta-grinn-common-netboot
-    commit: dc63ae9436fb9a23b4b3ba95409f76f3b647d06b
+    commit: f12740a98a262e54f7e4266709c13acd3c35ca38
     branch: scarthgap
