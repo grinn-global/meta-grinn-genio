@@ -22,6 +22,13 @@ TF_ARGS_EXTRA += "--per_file_copt=tensorflow/lite/delegates/utils/neuron_stable_
 STABLE_DELEGATE_SETTINGS = "${S}/tensorflow/lite/delegates/utils/neuron_stable_delegate/settings.json"
 STABLE_DELEGATE_UPSTREAM_PATH = "/usr/lib64/libtensorflowlite_mtk_neuron_delegate.so"
 
+# Select Python headers/version for the wrapper build.
+CUSTOM_BAZEL_FLAGS:append = " --repo_env=TF_PYTHON_VERSION=${PYTHON_BASEVERSION}"
+
+# Correct the wheel's platform metadata.
+export WHEEL_PLATFORM_NAME = "linux_aarch64"
+export PIP_PLATFORM = "linux_aarch64"
+
 do_install:append() {
 	install -d ${D}${libdir}
 	install -d ${D}${datadir}/label_image
