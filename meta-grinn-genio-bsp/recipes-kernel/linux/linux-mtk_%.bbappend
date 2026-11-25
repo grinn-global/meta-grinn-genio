@@ -16,10 +16,12 @@ SRC_URI:append:grinn-genio-360-360p-sbc = " \
     file://0002-usb-mtu3-add-property-to-keep-usb3-port-on-host.patch \
     file://eth.cfg \
     file://pcie-aspm.cfg \
+    file://btf-modules.cfg \
 "
 SRC_URI:append:grinn-genio-510-700-sbc = " \
     file://${MACHINE}.dts;subdir=${DT_DIR} \
     file://grinn-genio-510-700-sbc.dtsi;subdir=${DT_DIR} \
     file://0001-mtk_dp-add-support-for-direct-display-port-interface.patch \
     file://eth.cfg \
+    file://btf-modules.cfg \
 "
